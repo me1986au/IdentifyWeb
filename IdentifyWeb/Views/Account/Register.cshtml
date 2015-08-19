@@ -3,6 +3,15 @@
     ViewBag.Title = "Register";
 }
 
+<script type="text/javascript">
+    $(function () {
+        // This will make every element with the class "date-picker" into a DatePicker element
+        //$('.date-picker').datepicker({ dateFormat: 'dd/mm/yy' });
+        $('.date-picker').datepicker("option", "dateFormat", "dd/mm/yy");
+    })
+</script>
+
+
 <h2>@ViewBag.Title.</h2>
 
 @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
@@ -11,6 +20,7 @@
     <h4>Create a new account.</h4>
     <hr />
     @Html.ValidationSummary("", new { @class = "text-danger" })
+    <h5>Account Details:</h5>
     <div class="form-group">
         @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
@@ -24,9 +34,77 @@
         </div>
     </div>
     <div class="form-group">
-        @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
+        @Html.LabelFor(m => m.ConfirmPassword, new {@class = "col-md-2 control-label"})
         <div class="col-md-10">
-            @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+            @Html.PasswordFor(m => m.ConfirmPassword, new {@class = "form-control"})
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.PhoneNumber, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.ConfirmPhoneNumber, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.ConfirmPhoneNumber, new { @class = "form-control" })
+        </div>
+    </div>
+    <hr/>
+    <h5>Personal Details:</h5>
+    <div class="form-group">
+        @Html.LabelFor(m => m.FirstName, new {@class = "col-md-2 control-label"})
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.FirstName, new {@class = "form-control"})
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.LastName, new {@class = "col-md-2 control-label"})
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.LastName, new {@class = "form-control"})
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Gender, new {@class = "col-md-2 control-label"})
+        <div class="col-md-10">
+
+            @Html.Label("Female")
+            @Html.RadioButtonFor(m => m.Gender, 0, new {@class = "form-control"})
+            @Html.Label("Intersex")
+            @Html.RadioButtonFor(m => m.Gender, 1, new {@class = "form-control"})
+            @Html.Label("Male")
+            @Html.RadioButtonFor(m => m.Gender, 2, new {@class = "form-control"})
+        </div>
+    </div>
+
+   
+
+
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.DateOfBirth, new {@class = "col-md-2 control-label"})
+        <div class="col-md-10">
+            @Html.TextBoxFor(model => model.DateOfBirth, new { @class = "form-control date-picker", placeholder = "Enter Drop-off date here..." })
+            @Html.ValidationMessageFor(model => model.DateOfBirth)
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Country, new {@class = "col-md-2 control-label"})
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.Country, new {@class = "form-control"})
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.State, new {@class = "col-md-2 control-label"})
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.State, new {@class = "form-control"})
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.PostCode, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.PostCode, new { @class = "form-control" })
         </div>
     </div>
     <div class="form-group">

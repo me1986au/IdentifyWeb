@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace IdentifyWeb.Models
@@ -79,6 +80,44 @@ namespace IdentifyWeb.Models
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        [Required]
+        [DataType(DataType.PhoneNumber)]
+        [Display(Name = "Mobile Phone Number")]
+        public string PhoneNumber { get; set; }
+
+        [DataType(DataType.PhoneNumber)]
+        [Display(Name = "Confirm Phone Number")]
+        [Compare("PhoneNumber", ErrorMessage = "The phone number and confirmation phone number do not match.")]
+        public string ConfirmPhoneNumber { get; set; }
+
+        [Required]
+        [Display(Name = "First Name")]
+        public string FirstName { get; set; }
+
+        [Required]
+        [Display(Name = "Last Name")]
+        public string LastName { get; set; }
+        
+        [Required]
+        [Display(Name = "Gender")]
+        public Gender Gender { get; set; }
+
+        [Required]
+        [Display(Name = "Date Of Birth")]
+        public DateTime DateOfBirth { get; set; }
+
+        [Required]
+        [Display(Name = "Country")]
+        public string Country { get; set; }
+
+        [Required]
+        [Display(Name = "State")]
+        public string State { get; set; }
+
+        [Required]
+        [Display(Name = "Post Code")]
+        public string PostCode { get; set; }
     }
 
     public class ResetPasswordViewModel

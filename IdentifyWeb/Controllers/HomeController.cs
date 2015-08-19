@@ -22,7 +22,7 @@ namespace IdentifyWeb.Controllers
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
+            ViewBag.Message = "Our Contact Details";
 
             return View();
         }

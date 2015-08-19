@@ -151,7 +151,7 @@ namespace IdentifyWeb.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, FistName = model.FirstName, LastName = model.LastName, Gender = model.Gender, DateOfBirth = model.DateOfBirth, PhoneNumber = model.PhoneNumber, Country = model.Country, State =  model.State, PostCode = model.PostCode};
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
