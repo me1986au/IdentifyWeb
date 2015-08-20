@@ -1,5 +1,7 @@
 namespace IdentifyWeb.Migrations
 {
+    //example how https://msdn.microsoft.com/en-us/data/jj591621
+
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
