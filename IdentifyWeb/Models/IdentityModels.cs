@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -15,9 +16,6 @@ namespace IdentifyWeb.Models
         Male
     }
 
-
-
-
     // You can add profile data for the user by adding more properties to your ApplicationUser class, please visit http://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
     public class ApplicationUser : IdentityUser
     {
@@ -31,6 +29,8 @@ namespace IdentifyWeb.Models
         public string Country { get; set; }
         public string State { get; set; }
         public string PostCode { get; set; }
+
+        public virtual ICollection<Person> Persons { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
