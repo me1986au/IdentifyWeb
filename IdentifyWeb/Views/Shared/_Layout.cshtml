@@ -9,10 +9,17 @@
     @Scripts.Render("~/bundles/jquery")
     @Styles.Render("~/Content/jqueryuicss")
     <script type="text/javascript">
-    $(function () {
-        // This will make every element with the class "date-picker" into a DatePicker element
-        $('.date-picker').datepicker();
-    })
+        $(function() {
+            // This will make every element with the class "date-picker" into a DatePicker element
+            $('.date-picker').datepicker();
+        });
+
+        $(function() {
+            // This will make every element with the class "date-picker" into a DatePicker element
+            //$('.date-picker').datepicker({ dateFormat: 'dd/mm/yy' });
+            $('.date-picker').datepicker("option", "dateFormat", "dd/mm/yy");
+        });
+
     </script>
 
 </head>

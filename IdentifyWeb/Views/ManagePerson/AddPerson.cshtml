@@ -1,12 +1,89 @@
-﻿@model IdentifyWeb.Models.PersonsIndexViewModels
+﻿@using System.ComponentModel
+@using Microsoft.Ajax.Utilities
+@model IdentifyWeb.Models.AddPersonViewModel
 @{
     ViewBag.Title = "Add Person";
 }
+
+<script type="text/javascript">
+
+    //$(document).ready(function () {
+
+    //    $('#btnTest').click(function (e) {
+
+    //        $.ajax({
+    //            url: "/ManagePerson/GetStudent",
+    //            success: function (student) {
+    //                var stdnt = "ID: " + student.ID + "<br/>"
+    //                    + "Name: " + student.Name + "<br/>"
+    //                    + "Grades: " + student.Grades;
+    //                $("#yolo").html(stdnt);
+    //            }
+    //        });
+
+    //        alert("yolo");
+    //    });
+
+    //});
+
+</script>
 
 <h2>@ViewBag.Title.</h2>
 
 <p class="text-success">@ViewBag.StatusMessage</p>
 <div>
-    <h4>New Person</h4>
+
+
+   @using (Html.BeginForm("AddPerson", "ManagePerson", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+   {
+    @Html.AntiForgeryToken()
+    <h4>Create a new account.</h4>
     <hr />
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+    <h5>Personal Details:</h5>
+    <div class="form-group">
+        @Html.LabelFor(m => m.FirstName, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.LastName, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+            @Html.LabelFor(m => m.Alias, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.Alias, new { @class = "form-control" })
+            </div>
+        </div>
+       <div class="form-group">
+           @Html.LabelFor(m => m.Gender, new {@class = "col-md-2 control-label"})
+           <div class="col-md-10">
+
+               @Html.Label("Female")
+               @Html.RadioButtonFor(m => m.Gender, 0, new {@class = "form-control"})
+               @Html.Label("Intersex")
+               @Html.RadioButtonFor(m => m.Gender, 1, new {@class = "form-control"})
+               @Html.Label("Male")
+               @Html.RadioButtonFor(m => m.Gender, 2, new {@class = "form-control"})
+           </div>
+       </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.DateOfBirth, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(model => model.DateOfBirth, new { @class = "form-control date-picker", placeholder = "Enter Drop-off date here..." })
+            @Html.ValidationMessageFor(model => model.DateOfBirth)
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" class="btn btn-default" value="Add Person" />
+        </div>
+    </div>
+   }
+
 </div>

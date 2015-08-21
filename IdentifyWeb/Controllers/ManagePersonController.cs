@@ -32,9 +32,9 @@ namespace IdentifyWeb.Controllers
             {
                 return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
             }
-            private set 
-            { 
-                _signInManager = value; 
+            private set
+            {
+                _signInManager = value;
             }
         }
 
@@ -56,11 +56,66 @@ namespace IdentifyWeb.Controllers
         {
 
             var model = new PersonsIndexViewModels();
-   
+
             return View(model);
         }
 
-       
+        // GET: /Manage/ChangePassword
+        public async Task<ActionResult> AddPerson()
+        {
+
+            var model = new AddPersonViewModel();
+
+            return View();
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> AddPerson(AddPersonViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            using (var dbContext = ApplicationDbContext.Create())
+            {
+
+                if (model != null)
+                {
+                    var person = new Person();
+
+                    person.Id = Guid.NewGuid().ToString();
+                    person.ApplicationUserId = User.Identity.GetUserId();
+                    person.FirstName = model.FirstName;
+                    person.LastName = model.LastName;
+                    person.Alias = model.Alias;
+                    person.DateOfBirth = model.DateOfBirth;
+                    person.Gender = model.Gender.Value;
+
+                    dbContext.Persons.Add(person);
+                    dbContext.SaveChanges();
+                }
+
+            }
+
+            return RedirectToAction("Index");
+
+        }
+
+        //public JsonResult GetStudent()
+        //{
+        //    var student =  new 
+        //    {
+        //        ID = 123456,
+        //        Name = "John Smith",
+        //        Grades = new int[] { 77, 86, 99, 100 }
+        //    };
+        //    return Json(student, JsonRequestBehavior.AllowGet);
+        //}
+
+
 
     }
 }

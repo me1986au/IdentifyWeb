@@ -3,10 +3,25 @@
     ViewBag.Title = "Manage";
 }
 
+
+<script type="text/javascript">
+    
+    $(document).ready(function() {
+        $('#btnAddPerson').click(function() {
+            document.location = '@Url.Action("AddPerson", "ManagePerson")';
+        });
+    });
+</script>
+
 <h2>@ViewBag.Title.</h2>
 
 <p class="text-success">@ViewBag.StatusMessage</p>
 <div>
+
+
     <h4>Manage Person</h4>
-    <hr />
+    <hr/>
+
+    <input id="btnAddPerson" type="button" value="Add Person" />
+
 </div>
