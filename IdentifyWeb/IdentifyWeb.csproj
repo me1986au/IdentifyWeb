@@ -178,6 +178,7 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="ControllerHelper\PageViewFactory.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManagePersonController.cs" />
@@ -189,12 +190,33 @@
     <Compile Include="Migrations\201508210810559_AddPersonClass.Designer.cs">
       <DependentUpon>201508210810559_AddPersonClass.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201508260859446_PersonsAttributeCategory.cs" />
+    <Compile Include="Migrations\201508260859446_PersonsAttributeCategory.Designer.cs">
+      <DependentUpon>201508260859446_PersonsAttributeCategory.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201508260904273_PersonsAttribute.cs" />
+    <Compile Include="Migrations\201508260904273_PersonsAttribute.Designer.cs">
+      <DependentUpon>201508260904273_PersonsAttribute.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201508260914258_AddressSubAttribute.cs" />
+    <Compile Include="Migrations\201508260914258_AddressSubAttribute.Designer.cs">
+      <DependentUpon>201508260914258_AddressSubAttribute.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201508260914469_PhoneNumberSubAttribute.cs" />
+    <Compile Include="Migrations\201508260914469_PhoneNumberSubAttribute.Designer.cs">
+      <DependentUpon>201508260914469_PhoneNumberSubAttribute.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201508260915080_TimeFrameSubAttribute.cs" />
+    <Compile Include="Migrations\201508260915080_TimeFrameSubAttribute.Designer.cs">
+      <DependentUpon>201508260915080_TimeFrameSubAttribute.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManagePersonsViewModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\IGroupPanel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -291,6 +313,7 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\ManagePerson\Index.cshtml" />
     <Content Include="Views\ManagePerson\AddPerson.cshtml" />
+    <Content Include="Views\ManagePerson\Partial\_PersonLinkPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -306,6 +329,21 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201508210810559_AddPersonClass.resx">
       <DependentUpon>201508210810559_AddPersonClass.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201508260859446_PersonsAttributeCategory.resx">
+      <DependentUpon>201508260859446_PersonsAttributeCategory.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201508260904273_PersonsAttribute.resx">
+      <DependentUpon>201508260904273_PersonsAttribute.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201508260914258_AddressSubAttribute.resx">
+      <DependentUpon>201508260914258_AddressSubAttribute.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201508260914469_PhoneNumberSubAttribute.resx">
+      <DependentUpon>201508260914469_PhoneNumberSubAttribute.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201508260915080_TimeFrameSubAttribute.resx">
+      <DependentUpon>201508260915080_TimeFrameSubAttribute.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

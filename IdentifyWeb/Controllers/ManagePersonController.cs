@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using IdentifyWeb.ControllerHelper;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
@@ -55,8 +56,10 @@ namespace IdentifyWeb.Controllers
         public async Task<ActionResult> Index()
         {
 
-            var model = new PersonsIndexViewModels();
+            string userId = User.Identity.GetUserId();
 
+            var model = new ManagePersonsIndexViewModel();
+            model.PageRenderActions = PageViewFactory.GetPersonLinkPartials(userId);  
             return View(model);
         }
 
@@ -99,7 +102,7 @@ namespace IdentifyWeb.Controllers
                 }
 
             }
-
+            
             return RedirectToAction("Index");
 
         }

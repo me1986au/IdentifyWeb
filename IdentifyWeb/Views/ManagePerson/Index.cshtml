@@ -1,4 +1,4 @@
-﻿@model IdentifyWeb.Models.PersonsIndexViewModels
+﻿@model IdentifyWeb.Models.ManagePersonsIndexViewModel
 @{
     ViewBag.Title = "Manage";
 }
@@ -21,6 +21,12 @@
 
     <h4>Manage Person</h4>
     <hr/>
+
+
+    @foreach (var renderAction in Model.PageRenderActions)
+    {
+        Html.RenderAction(renderAction.RenderAction, renderAction.RenderController, new {ids=renderAction.Ids});
+    }
 
     <input id="btnAddPerson" type="button" value="Add Person" />
 

@@ -1,0 +1,33 @@
+﻿
+@using IdentifyWeb.Models
+@model IdentifyWeb.Models.PersonSectionViewModel
+@{
+    ViewBag.Title = "Manage";
+}
+
+@{
+
+    if (Model.PersonLinks != null)
+    {
+        foreach (var personLinkDto in Model.PersonLinks)
+        {
+            <div>
+                @personLinkDto.FirstName
+                <br />
+                @personLinkDto.LastName
+                <br />
+                @personLinkDto.Alias
+                <br />
+                @personLinkDto.EditUrl
+                <br />
+                @personLinkDto.DeleteUrl
+                <br />
+                <br />
+                <br />
+
+            </div>
+        }
+    }
+
+
+}
