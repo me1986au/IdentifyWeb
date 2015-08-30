@@ -55,11 +55,11 @@ namespace IdentifyWeb.Models
 
         public override string RenderController
         {
-            get { return "ManagePersonController"; }
+            get { return "ManagePerson"; }
         }
 
         public override string RenderAction {
-            get { return "_ExistingPersonView"; }
+            get { return "_ExistingPerson"; }
         }
 
         public override string AddItemUrl

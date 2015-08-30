@@ -7,13 +7,13 @@ namespace IdentifyWeb.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class PersonsAttributeCategory : IMigrationMetadata
+    public sealed partial class PersonsAttribute : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(PersonsAttributeCategory));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(PersonsAttribute));
         
         string IMigrationMetadata.Id
         {
-            get { return "201508260859446_PersonsAttributeCategory"; }
+            get { return "201508300856483_PersonsAttribute"; }
         }
         
         string IMigrationMetadata.Source

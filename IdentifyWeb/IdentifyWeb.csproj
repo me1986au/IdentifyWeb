@@ -186,29 +186,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201508210810559_AddPersonClass.cs" />
-    <Compile Include="Migrations\201508210810559_AddPersonClass.Designer.cs">
-      <DependentUpon>201508210810559_AddPersonClass.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201508260859446_PersonsAttributeCategory.cs" />
-    <Compile Include="Migrations\201508260859446_PersonsAttributeCategory.Designer.cs">
-      <DependentUpon>201508260859446_PersonsAttributeCategory.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201508260904273_PersonsAttribute.cs" />
-    <Compile Include="Migrations\201508260904273_PersonsAttribute.Designer.cs">
-      <DependentUpon>201508260904273_PersonsAttribute.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201508260914258_AddressSubAttribute.cs" />
-    <Compile Include="Migrations\201508260914258_AddressSubAttribute.Designer.cs">
-      <DependentUpon>201508260914258_AddressSubAttribute.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201508260914469_PhoneNumberSubAttribute.cs" />
-    <Compile Include="Migrations\201508260914469_PhoneNumberSubAttribute.Designer.cs">
-      <DependentUpon>201508260914469_PhoneNumberSubAttribute.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201508260915080_TimeFrameSubAttribute.cs" />
-    <Compile Include="Migrations\201508260915080_TimeFrameSubAttribute.Designer.cs">
-      <DependentUpon>201508260915080_TimeFrameSubAttribute.cs</DependentUpon>
+    <Compile Include="Migrations\201508300856483_PersonsAttribute.cs" />
+    <Compile Include="Migrations\201508300856483_PersonsAttribute.Designer.cs">
+      <DependentUpon>201508300856483_PersonsAttribute.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -327,23 +307,8 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201508210810559_AddPersonClass.resx">
-      <DependentUpon>201508210810559_AddPersonClass.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201508260859446_PersonsAttributeCategory.resx">
-      <DependentUpon>201508260859446_PersonsAttributeCategory.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201508260904273_PersonsAttribute.resx">
-      <DependentUpon>201508260904273_PersonsAttribute.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201508260914258_AddressSubAttribute.resx">
-      <DependentUpon>201508260914258_AddressSubAttribute.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201508260914469_PhoneNumberSubAttribute.resx">
-      <DependentUpon>201508260914469_PhoneNumberSubAttribute.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201508260915080_TimeFrameSubAttribute.resx">
-      <DependentUpon>201508260915080_TimeFrameSubAttribute.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201508300856483_PersonsAttribute.resx">
+      <DependentUpon>201508300856483_PersonsAttribute.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

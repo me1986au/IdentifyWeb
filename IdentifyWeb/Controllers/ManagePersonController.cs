@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -59,7 +60,7 @@ namespace IdentifyWeb.Controllers
             string userId = User.Identity.GetUserId();
 
             var model = new ManagePersonsIndexViewModel();
-            model.PageRenderActions = PageViewFactory.GetPersonLinkPartials(userId);  
+            model.PageRenderActions = PageViewFactory.GetPersonLinkPartials(userId);
             return View(model);
         }
 
@@ -102,8 +103,25 @@ namespace IdentifyWeb.Controllers
                 }
 
             }
-            
+
             return RedirectToAction("Index");
+
+        }
+
+        public async Task<ActionResult> _ExistingPerson(string ids)
+        {
+
+
+            using (var dbContext = new ApplicationDbContext())
+            {
+
+                string userId = User.Identity.GetUserId();
+
+                var persons = dbContext.Persons.Where(x => x.ApplicationUserId == userId).ToList();
+                var model = new PersonSectionViewModel(persons);
+
+                return View("Partial/_PersonLinkPartial", model);
+            }
 
         }
 

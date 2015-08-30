@@ -25,7 +25,7 @@
 
     @foreach (var renderAction in Model.PageRenderActions)
     {
-        Html.RenderAction(renderAction.RenderAction, renderAction.RenderController, new {ids=renderAction.Ids});
+       Html.RenderAction(renderAction.RenderAction, renderAction.RenderController, new {ids=renderAction.Ids});
     }
 
     <input id="btnAddPerson" type="button" value="Add Person" />

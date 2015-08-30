@@ -82,7 +82,7 @@ namespace IdentifyWeb.Models
             {
                 get
                 {
-                    return string.Format("ManagePersonController/EditPerson?id={0}", Id);
+                    return string.Format("ManagePerson/EditPerson?id={0}", Id);
                 }
             }
 
@@ -90,7 +90,7 @@ namespace IdentifyWeb.Models
             {
                 get
                 {
-                    return string.Format("ManagePersonController/DeletePerson?id={0}", Id);
+                    return string.Format("ManagePerson/DeletePerson?id={0}", Id);
                 }
             }
 
