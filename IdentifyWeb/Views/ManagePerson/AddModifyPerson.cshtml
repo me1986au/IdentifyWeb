@@ -1,8 +1,8 @@
 ﻿@using System.ComponentModel
 @using Microsoft.Ajax.Utilities
-@model IdentifyWeb.Models.AddPersonViewModel
+@model IdentifyWeb.Models.PersonViewModel
 @{
-    ViewBag.Title = "Add Person";
+
 }
 
 <script type="text/javascript">
@@ -34,13 +34,14 @@
 <div>
 
 
-   @using (Html.BeginForm("AddPerson", "ManagePerson", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+   @using (Html.BeginForm("AddModifyPerson", "ManagePerson", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
    {
     @Html.AntiForgeryToken()
     <h4>Create a new account.</h4>
     <hr />
     @Html.ValidationSummary("", new { @class = "text-danger" })
-    <h5>Personal Details:</h5>
+       <h5>Personal Details:</h5>
+       @Html.HiddenFor(model => model.PersonId)
     <div class="form-group">
         @Html.LabelFor(m => m.FirstName, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
@@ -64,24 +65,24 @@
            <div class="col-md-10">
 
                @Html.Label("Female")
-               @Html.RadioButtonFor(m => m.Gender, 0, new {@class = "form-control"})
+               @Html.RadioButtonFor(m => m.Gender, "female", new {@class = "form-control"})
                @Html.Label("Intersex")
-               @Html.RadioButtonFor(m => m.Gender, 1, new {@class = "form-control"})
+               @Html.RadioButtonFor(m => m.Gender, "intersex", new {@class = "form-control"})
                @Html.Label("Male")
-               @Html.RadioButtonFor(m => m.Gender, 2, new {@class = "form-control"})
+               @Html.RadioButtonFor(m => m.Gender, "male", new {@class = "form-control"})
            </div>
        </div>
     <div class="form-group">
         @Html.LabelFor(m => m.DateOfBirth, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
-            @Html.TextBoxFor(model => model.DateOfBirth, new { @class = "form-control date-picker", placeholder = "Enter Drop-off date here..." })
+            @Html.TextBoxFor(model => model.DateOfBirth, new { @class = "form-control date-picker", placeholder = "Enter Drop-off date here...", Value = Model.DateOfBirth.ToString("MM/dd/yyyy")}) 
             @Html.ValidationMessageFor(model => model.DateOfBirth)
         </div>
     </div>
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input type="submit" class="btn btn-default" value="Add Person" />
+            <input type="submit" class="btn btn-default" value="@ViewBag.SaveText" />
         </div>
     </div>
    }

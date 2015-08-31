@@ -46,10 +46,10 @@ namespace IdentifyWeb.Models
     [Table("PersonsAttribute")]
     public class PersonsAttribute
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
         public int PersonsAttributeCategoryId { get; set; }
 
-        [ForeignKey("Id")]
+        [ForeignKey("PersonsAttributeCategoryId")]
         [Required]
         public virtual PersonsAttributeCategory PersonsAttributeCategory { get; set; }
 
@@ -73,7 +73,7 @@ namespace IdentifyWeb.Models
     [Table("AddressSubAttribute")]
     public class AddressSubAttribute
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
         public string StreetAddress { get; set; }
         public string StreetAddress1 { get; set; }
         public string City { get; set; }
@@ -81,41 +81,41 @@ namespace IdentifyWeb.Models
         public string PostCode { get; set; }
         public string CountryRegion { get; set; }
 
-        public int PersonsAttributeId { get; set; }
+        public string PersonsAttributeId { get; set; }
         public PersonsAttribute PersonsAttribute { get; set; }
 
     }
 
     public class PhoneNumberSubAttribute
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
         public string Ext { get; set; }
         public string Number { get; set; }
 
-        public int PersonsAttributeId { get; set; }
+        public string PersonsAttributeId { get; set; }
         public PersonsAttribute PersonsAttribute { get; set; }
 
     }
 
     public class PersonalSubAttribute
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Alias { get; set; }
 
-        public int PersonsAttributeId { get; set; }
+        public string PersonsAttributeId { get; set; }
         public PersonsAttribute PersonsAttribute { get; set; }
 
     }
 
     public class TimeFrameSubAttribute
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
         public DateTime From { get; set; }
         public DateTime To { get; set; }
 
-        public int PersonsAttributeId { get; set; }
+        public string PersonsAttributeId { get; set; }
         public PersonsAttribute PersonsAttribute { get; set; }
 
     }

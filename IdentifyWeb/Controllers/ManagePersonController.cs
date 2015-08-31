@@ -1,57 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Data.Entity;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
 using IdentifyWeb.ControllerHelper;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.Owin;
-using Microsoft.Owin.Security;
 using IdentifyWeb.Models;
+using IdentifyWeb.Services;
+using Microsoft.AspNet.Identity;
 
 namespace IdentifyWeb.Controllers
 {
     [Authorize]
-    public class ManagePersonController : Controller
+    public class ManagePersonController : ControllerBase
     {
-        private ApplicationSignInManager _signInManager;
-        private ApplicationUserManager _userManager;
-
-        public ManagePersonController()
-        {
-        }
-
-        public ManagePersonController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
-        {
-            UserManager = userManager;
-            SignInManager = signInManager;
-        }
-
-        public ApplicationSignInManager SignInManager
-        {
-            get
-            {
-                return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
-            }
-            private set
-            {
-                _signInManager = value;
-            }
-        }
-
-        public ApplicationUserManager UserManager
-        {
-            get
-            {
-                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
-            }
-            private set
-            {
-                _userManager = value;
-            }
-        }
-
         //
         // GET: /Manage/Index
         public async Task<ActionResult> Index()
@@ -67,16 +27,37 @@ namespace IdentifyWeb.Controllers
         // GET: /Manage/ChangePassword
         public async Task<ActionResult> AddPerson()
         {
+            ViewBag.Title = "Add Person";
 
-            var model = new AddPersonViewModel();
+            ViewBag.SaveText = "Add Person";
 
-            return View();
+
+            var model = new PersonViewModel();
+
+            return View("AddModifyPerson");
+        }
+
+        public async Task<ActionResult> ModifyPerson(string id)
+        {
+            ViewBag.Title = "Edit Person";
+            ViewBag.SaveText = "Update Person";
+
+
+            var userId = GetUserId();
+            if (!ManagePersonService.CheckIfPersonBelongsToUser(userId, id))
+                return View("ErrorPage", new ErrorViewModel("Unkown Person", "This Person Is Unknown"));
+
+            var person = ManagePersonService.GetPerson(id);
+
+            var model = new PersonViewModel(person);
+
+            return View("AddModifyPerson", model);
         }
 
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> AddPerson(AddPersonViewModel model)
+        public async Task<ActionResult> AddModifyPerson(PersonViewModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -88,17 +69,32 @@ namespace IdentifyWeb.Controllers
 
                 if (model != null)
                 {
+                    var userId = GetUserId();
+
                     var person = new Person();
 
-                    person.Id = Guid.NewGuid().ToString();
-                    person.ApplicationUserId = User.Identity.GetUserId();
+                    if (model.PersonId != null)
+                    {
+                        if (!ManagePersonService.CheckIfPersonBelongsToUser(userId, model.PersonId))
+                            return View("ErrorPage", new ErrorViewModel("Unkown Person", "This Person Is Unknown"));
+
+                        person = ManagePersonService.GetPerson(model.PersonId);
+                        dbContext.Entry(person).State = EntityState.Modified;
+                    }
+                    else
+                    {
+                        person.Id = Guid.NewGuid().ToString();
+                        dbContext.Persons.Add(person);
+                    }
+
+
+                    person.ApplicationUserId = userId;
                     person.FirstName = model.FirstName;
                     person.LastName = model.LastName;
                     person.Alias = model.Alias;
                     person.DateOfBirth = model.DateOfBirth;
                     person.Gender = model.Gender.Value;
 
-                    dbContext.Persons.Add(person);
                     dbContext.SaveChanges();
                 }
 
@@ -115,9 +111,9 @@ namespace IdentifyWeb.Controllers
             using (var dbContext = new ApplicationDbContext())
             {
 
-                string userId = User.Identity.GetUserId();
+                string userId = GetUserId();
+                var persons = ManagePersonService.GetPersonsByUserId(userId);
 
-                var persons = dbContext.Persons.Where(x => x.ApplicationUserId == userId).ToList();
                 var model = new PersonSectionViewModel(persons);
 
                 return View("Partial/_PersonLinkPartial", model);

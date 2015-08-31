@@ -1,6 +1,6 @@
 ﻿@model IdentifyWeb.Models.ManagePersonsIndexViewModel
 @{
-    ViewBag.Title = "Manage";
+    ViewBag.Title = "Manage Person";
 }
 
 
@@ -18,10 +18,8 @@
 <p class="text-success">@ViewBag.StatusMessage</p>
 <div>
 
-
-    <h4>Manage Person</h4>
+    <h4>This page allows you to Add, Modify or Delete A Persons Profile</h4>
     <hr/>
-
 
     @foreach (var renderAction in Model.PageRenderActions)
     {

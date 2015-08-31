@@ -2,14 +2,10 @@
 @using IdentifyWeb.Models
 @model IdentifyWeb.Models.PersonSectionViewModel
 @{
+    Layout = null; //Disables the footer from getting rendered
     ViewBag.Title = "Manage";
 }
-PARTIAL LINK
 @{
-
-
- 
-
     if (Model.PersonLinks != null)
     {
         foreach (var personLinkDto in Model.PersonLinks)
@@ -20,17 +16,11 @@ PARTIAL LINK
                 @Html.Label(@personLinkDto.FirstName)
                 @Html.Label(@personLinkDto.LastName)
                 (@Html.Label(@personLinkDto.Alias))
+                <a href=@personLinkDto.EditUrl>Edit</a> |
+                <a href=@personLinkDto.DeleteUrl>Delete</a>
+                <br/>
                 <br />
-                  @personLinkDto.EditUrl
-                <br />
-                @personLinkDto.DeleteUrl
-                <br />
-                <br />
-                <br />
-
             </div>
         }
     }
-
-
 }

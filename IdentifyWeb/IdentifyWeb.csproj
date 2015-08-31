@@ -180,24 +180,27 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="ControllerHelper\PageViewFactory.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ControllerBase.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManagePersonController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201508300856483_PersonsAttribute.cs" />
-    <Compile Include="Migrations\201508300856483_PersonsAttribute.Designer.cs">
-      <DependentUpon>201508300856483_PersonsAttribute.cs</DependentUpon>
+    <Compile Include="Migrations\201508310840303_PersonsAttributeCategory.cs" />
+    <Compile Include="Migrations\201508310840303_PersonsAttributeCategory.Designer.cs">
+      <DependentUpon>201508310840303_PersonsAttributeCategory.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
+    <Compile Include="Models\ErrorViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManagePersonsViewModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\IGroupPanel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\ManagePersonService.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -292,11 +295,13 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\ManagePerson\Index.cshtml" />
-    <Content Include="Views\ManagePerson\AddPerson.cshtml" />
+    <Content Include="Views\ManagePerson\AddModifyPerson.cshtml" />
     <Content Include="Views\ManagePerson\Partial\_PersonLinkPartial.cshtml" />
+    <Content Include="Views\Shared\ErrorPage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\ControllerBase\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -307,8 +312,8 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201508300856483_PersonsAttribute.resx">
-      <DependentUpon>201508300856483_PersonsAttribute.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201508310840303_PersonsAttributeCategory.resx">
+      <DependentUpon>201508310840303_PersonsAttributeCategory.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

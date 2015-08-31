@@ -18,8 +18,31 @@ namespace IdentifyWeb.Models
         }
     }
 
-    public class AddPersonViewModel
+    public class PersonViewModel
     {
+        private DateTime _dateOfBirth;
+        public PersonViewModel() { }
+
+        public PersonViewModel(string personId, string firstName, string lastName, string @alias, DateTime dateOfBirth, Gender? gender)
+        {
+            PersonId = personId;
+            FirstName = firstName;
+            LastName = lastName;
+            Alias = alias;
+            DateOfBirth = dateOfBirth;
+            Gender = gender;
+        }
+
+        public PersonViewModel(Person person)
+        {
+            PersonId = person.Id;
+            FirstName = person.FirstName;
+            LastName = person.LastName;
+            Alias = person.Alias;
+            Gender = person.Gender;
+            DateOfBirth = person.DateOfBirth;
+        }
+
         public string PersonId { get; set; }
 
         [Required]
@@ -38,9 +61,14 @@ namespace IdentifyWeb.Models
         [Display(Name = "Gender")]
         public Gender? Gender { get; set; }
 
+
         [Required]
         [Display(Name = "Date Of Birth")]
-        public DateTime DateOfBirth { get; set; }
+        public DateTime DateOfBirth
+        {
+            get { return _dateOfBirth; }
+            set { _dateOfBirth = value; }
+        }
     }
 
 
@@ -82,7 +110,7 @@ namespace IdentifyWeb.Models
             {
                 get
                 {
-                    return string.Format("ManagePerson/EditPerson?id={0}", Id);
+                    return string.Format("ManagePerson/ModifyPerson?id={0}", Id);
                 }
             }
 
