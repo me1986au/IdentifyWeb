@@ -1,0 +1,8 @@
+﻿
+@using IdentifyWeb.Extensions
+@model IEnumerable<IdentifyWeb.Models.EmergencyContactViewModel>
+@{
+    Layout = null;
+}
+
+@Html.EditorForMany(x => x, "EmergencyContactViewModels")

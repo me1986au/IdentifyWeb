@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Threading.Tasks;
 using System.Web.Mvc;
@@ -28,7 +29,6 @@ namespace IdentifyWeb.Controllers
         public async Task<ActionResult> AddPerson()
         {
             ViewBag.Title = "Add Person";
-
             ViewBag.SaveText = "Add Person";
 
 
@@ -132,7 +132,14 @@ namespace IdentifyWeb.Controllers
         //    return Json(student, JsonRequestBehavior.AllowGet);
         //}
 
+        [OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
+        public async Task<ActionResult> AddEmergencyContact()
+        {
+            var model = new List<EmergencyContactViewModel>() { new EmergencyContactViewModel()};
 
 
+
+            return View(model);
+        }
     }
 }

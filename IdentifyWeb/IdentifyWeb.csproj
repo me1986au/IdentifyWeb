@@ -184,6 +184,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManagePersonController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Extensions\HtmlHelperExtensions.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -194,6 +195,7 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
+    <Compile Include="Models\EmergencyContactViewModel.cs" />
     <Compile Include="Models\ErrorViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManagePersonsViewModels.cs" />
@@ -298,6 +300,8 @@
     <Content Include="Views\ManagePerson\AddModifyPerson.cshtml" />
     <Content Include="Views\ManagePerson\Partial\_PersonLinkPartial.cshtml" />
     <Content Include="Views\Shared\ErrorPage.cshtml" />
+    <Content Include="Views\ManagePerson\EditorTemplates\_EmergencyContact.cshtml" />
+    <Content Include="Views\ManagePerson\AddEmergencyContact.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

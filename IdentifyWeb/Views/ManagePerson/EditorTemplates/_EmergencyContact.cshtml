@@ -1,0 +1,29 @@
+﻿@model  IdentifyWeb.Models.EmergencyContactViewModel
+
+@{
+    Layout = null;
+}
+
+@*<script type="text/javascript">
+
+    $(document).ready(function () {
+        $("a.deleteRow").live("click", function () {
+            alert("yolo");
+            $(this).closest(".div").remove();
+            return false;
+        });
+
+    });
+
+</script>*@
+
+
+<div>
+    @Html.HiddenFor(model => model.Id)
+    @Html.EditorFor(x => x.Name)
+    @Html.EditorFor(x => x.PhoneNumber)
+    <a href="#" class="deleteRow">delete</a>
+    <br />
+    <br />
+</div>
+

@@ -1,32 +1,33 @@
 ﻿@using System.ComponentModel
+@using IdentifyWeb.Extensions
 @using Microsoft.Ajax.Utilities
 @model IdentifyWeb.Models.PersonViewModel
 @{
 
 }
-
 <script type="text/javascript">
 
-    //$(document).ready(function () {
+        $(document).ready(function () {
 
-    //    $('#btnTest').click(function (e) {
+            $('#btnAddContact').click(function (e) {
 
-    //        $.ajax({
-    //            url: "/ManagePerson/GetStudent",
-    //            success: function (student) {
-    //                var stdnt = "ID: " + student.ID + "<br/>"
-    //                    + "Name: " + student.Name + "<br/>"
-    //                    + "Grades: " + student.Grades;
-    //                $("#yolo").html(stdnt);
-    //            }
-    //        });
+                $.ajax({
+                    url: "/ManagePerson/AddEmergencyContact",
+                    cache: false,
+                    success: function (html) {
+                        $("#EmergencyContactViewModels").append(html);
+                    }
+                });
 
-    //        alert("yolo");
-    //    });
+                alert("yolo");
 
-    //});
+                return false;
+            });
 
-</script>
+        });
+
+    </script>
+
 
 <h2>@ViewBag.Title.</h2>
 
@@ -72,13 +73,22 @@
                @Html.RadioButtonFor(m => m.Gender, "male", new {@class = "form-control"})
            </div>
        </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.DateOfBirth, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(model => model.DateOfBirth, new { @class = "form-control date-picker", placeholder = "Enter Drop-off date here...", Value = Model.DateOfBirth.ToString("MM/dd/yyyy")}) 
-            @Html.ValidationMessageFor(model => model.DateOfBirth)
-        </div>
-    </div>
+       <div class="form-group">
+           @Html.LabelFor(m => m.DateOfBirth, new {@class = "col-md-2 control-label"})
+           <div class="col-md-10">
+               @Html.TextBoxFor(model => model.DateOfBirth, new {@class = "form-control date-picker", placeholder = "Enter Drop-off date here...", Value = Model.DateOfBirth.ToString("MM/dd/yyyy")})
+               @Html.ValidationMessageFor(model => model.DateOfBirth)
+           </div>
+       </div>
+
+
+       <div id="EmergencyContactViewModels">
+               @Html.EditorForMany(x => x.EmergencyContactViewModels)
+       </div>
+
+       <button id="btnAddContact" onsubmit="return false;">Add Contact</button>
+       // return false on the on submit, prevents the form to do a postback
+
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">

@@ -5,6 +5,30 @@
     Layout = null; //Disables the footer from getting rendered
     ViewBag.Title = "Manage";
 }
+
+@*<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        $('#btnTest').click(function (e) {
+
+            $.ajax({
+                url: "/ManagePerson/AddEmergencyContact",
+                success: function (student) {
+                    var stdnt = "ID: " + student.ID + "<br/>"
+                        + "Name: " + student.Name + "<br/>"
+                        + "Grades: " + student.Grades;
+                    $("#yolo").html(stdnt);
+                }
+            });
+
+            alert("yolo");
+        });
+
+    });
+
+</script>*@
+
 @{
     if (Model.PersonLinks != null)
     {

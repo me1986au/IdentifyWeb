@@ -41,6 +41,11 @@ namespace IdentifyWeb.Models
             Alias = person.Alias;
             Gender = person.Gender;
             DateOfBirth = person.DateOfBirth;
+
+
+            EmergencyContactViewModels = new EmergencyContactViewModels();
+            EmergencyContactViewModels.Add(new EmergencyContactViewModel( 1, "Michael Strange", "0423170746"));
+
         }
 
         public string PersonId { get; set; }
@@ -69,6 +74,9 @@ namespace IdentifyWeb.Models
             get { return _dateOfBirth; }
             set { _dateOfBirth = value; }
         }
+
+
+        public EmergencyContactViewModels EmergencyContactViewModels { get; set; }
     }
 
 
