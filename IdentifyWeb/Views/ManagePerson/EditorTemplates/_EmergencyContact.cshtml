@@ -2,26 +2,34 @@
 
 @{
     Layout = null;
+
+
+    var newGuid = Guid.NewGuid();
+    ViewBag.Guid = newGuid;
+
+    ViewData.TemplateInfo.HtmlFieldPrefix = string.Format("{0}[{1}]", "EmergencyContactViewModels", newGuid);
+
 }
 
 @*<script type="text/javascript">
 
-    $(document).ready(function () {
-        $("a.deleteRow").live("click", function () {
-            alert("yolo");
-            $(this).closest(".div").remove();
-            return false;
+        $(document).ready(function () {
+            $("a.deleteRow").live("click", function () {
+                alert("yolo");
+                $(this).closest(".div").remove();
+                return false;
+            });
+
         });
 
-    });
-
-</script>*@
+    </script>*@
 
 
-<div>
+<div class="editor-field">
+    <input type="hidden" name="EmergencyContactViewModels.Index" value=@ViewBag.Guid.ToString() />
     @Html.HiddenFor(model => model.Id)
-    @Html.EditorFor(x => x.Name)
-    @Html.EditorFor(x => x.PhoneNumber)
+    @Html.EditorFor(x => x.Name, new { data_val = "true", data_val_required = "The Name field is required." })
+    @Html.EditorFor(x => x.PhoneNumber, new { data_val = "true", data_val_required = "The PhoneNumber field is required." })
     <a href="#" class="deleteRow">delete</a>
     <br />
     <br />

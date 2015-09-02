@@ -1,4 +1,5 @@
-﻿@using System.ComponentModel
+﻿@using System.Activities.Statements
+@using System.ComponentModel
 @using IdentifyWeb.Extensions
 @using Microsoft.Ajax.Utilities
 @model IdentifyWeb.Models.PersonViewModel
@@ -83,7 +84,10 @@
 
 
        <div id="EmergencyContactViewModels">
-               @Html.EditorForMany(x => x.EmergencyContactViewModels)
+               @foreach (var emergencyModel in Model.EmergencyContactViewModels)
+               {
+                   Html.RenderPartial("EditorTemplates/_EmergencyContact", emergencyModel);
+               }
        </div>
 
        <button id="btnAddContact" onsubmit="return false;">Add Contact</button>

@@ -44,8 +44,7 @@ namespace IdentifyWeb.Models
 
 
             EmergencyContactViewModels = new EmergencyContactViewModels();
-            EmergencyContactViewModels.Add(new EmergencyContactViewModel( 1, "Michael Strange", "0423170746"));
-
+            EmergencyContactViewModels.Add(new EmergencyContactViewModel(1, "Michael Strange", "0423170746"));
         }
 
         public string PersonId { get; set; }

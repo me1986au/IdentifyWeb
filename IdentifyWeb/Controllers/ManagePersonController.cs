@@ -135,11 +135,9 @@ namespace IdentifyWeb.Controllers
         [OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
         public async Task<ActionResult> AddEmergencyContact()
         {
-            var model = new List<EmergencyContactViewModel>() { new EmergencyContactViewModel()};
-
-
-
-            return View(model);
+            var model =  new EmergencyContactViewModel();
+           
+            return View("EditorTemplates/_EmergencyContact", model);
         }
     }
 }
