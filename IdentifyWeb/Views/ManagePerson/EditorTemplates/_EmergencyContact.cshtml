@@ -1,22 +1,20 @@
 ﻿@model  IdentifyWeb.Models.EmergencyContactViewModel
 
+
 @{
-    Layout = null;
 
-
+    Layout = "~/";
     var newGuid = Guid.NewGuid();
     ViewBag.Guid = newGuid;
 
     ViewData.TemplateInfo.HtmlFieldPrefix = string.Format("{0}[{1}]", "EmergencyContactViewModels", newGuid);
-
 }
 
 <script type="text/javascript">
 
     $(document).ready(function () {
         $("a.deleteRow").on("click", function () {
-            alert("yolo");
-            $(this).closest("div").remove();
+            $(this).closest("div.partial").remove();
             return false;
         });
 
@@ -24,22 +22,32 @@
 
 </script>
 
-
-<div class="form-group">
-    <input type="hidden" name="EmergencyContactViewModels.Index" value=@ViewBag.Guid.ToString() />
-    @Html.HiddenFor(model => model.Id)
-
+<div class="partial">
     <div class="form-group">
-        @Html.LabelFor(m => m.Name, new {@class = "col-md-2 control-label"})
-        @Html.EditorFor(x => x.Name, new {data_val = "true", data_val_required = "The Name field is required.", @class = "form-control"})
+        <input type="hidden" name="EmergencyContactViewModels.Index" value=@ViewBag.Guid.ToString() />
+        @Html.HiddenFor(model => model.Id)
+
+        @Html.LabelFor(m => m.Name, new { @class = "col-md-2 control-label" })
+
+        <div class="col-md-10">
+            @Html.EditorFor(x => x.Name, new { @class = "form-control", data_val = "true", data_val_required = "The Name field is required." })
+        </div>
+
+
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(m => m.PhoneNumber, new { @class = "control-label" })
-        @Html.EditorFor(x => x.PhoneNumber, new { data_val = "true", data_val_required = "The PhoneNumber field is required.", @class = "form-control" })
+        @Html.LabelFor(m => m.PhoneNumber, new { @class = "col-md-2 control-label" })
+
+        <div class="col-md-10">
+            @Html.EditorFor(x => x.PhoneNumber, new { data_val = "true", data_val_required = "The PhoneNumber field is required." })
+        </div>
+
     </div>
-    <a href="#" class="deleteRow">Delete</a>
-    <br />
-    <br />
+    <div class="form-group">
+        <div class="col-md-10">
+            <a href="#" class="deleteRow">Delete</a>
+        </div>
+    </div>
+
 </div>
-

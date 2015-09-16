@@ -178,6 +178,7 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="ControllerHelper\Enumerations.cs" />
     <Compile Include="ControllerHelper\PageViewFactory.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ControllerBase.cs" />
@@ -202,6 +203,7 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\IGroupPanel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\EmergencyContactDto.cs" />
     <Compile Include="Services\ManagePersonService.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -302,6 +304,7 @@
     <Content Include="Views\Shared\ErrorPage.cshtml" />
     <Content Include="Views\ManagePerson\EditorTemplates\_EmergencyContact.cshtml" />
     <Content Include="Views\ManagePerson\AddEmergencyContact.cshtml" />
+    <Content Include="Views\Shared\_PartialLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

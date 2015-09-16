@@ -42,5 +42,19 @@ namespace IdentifyWeb.Services
             }
         }
 
+        private static Person SaveEmergencyContactAttribute(EmergencyContactAttributeDto emergencyContactAttributeDto)
+        {
+            using (var dbContext = new ApplicationDbContext())
+            {
+
+
+
+                var person = dbContext.Per.FirstOrDefault(x => x.Id == personId);
+
+                return person;
+            }
+        }
+
+
     }
 }

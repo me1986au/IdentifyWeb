@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using IdentifyWeb.ControllerHelper;
@@ -94,6 +95,9 @@ namespace IdentifyWeb.Controllers
                     person.Alias = model.Alias;
                     person.DateOfBirth = model.DateOfBirth;
                     person.Gender = model.Gender.Value;
+
+                    dbContext.Persons.
+
 
                     dbContext.SaveChanges();
                 }

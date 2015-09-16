@@ -20,7 +20,6 @@
                     }
                 });
 
-                alert("yolo");
 
                 return false;
             });
@@ -84,10 +83,17 @@
 
 
        <div id="EmergencyContactViewModels" class="form-group">
-               @foreach (var emergencyModel in Model.EmergencyContactViewModels)
+
+           <h4>Emergency Contacts</h4>
+
+
+           @if (Model.EmergencyContactViewModels != null && Model.EmergencyContactViewModels.Any())
+           {
+               foreach (var emergencyModel in Model.EmergencyContactViewModels)
                {
                    Html.RenderPartial("EditorTemplates/_EmergencyContact", emergencyModel);
                }
+           }
        </div>
 
        <button id="btnAddContact" onsubmit="return false;">Add Contact</button>

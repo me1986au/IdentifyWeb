@@ -26,3 +26,10 @@ textarea {
 a.deleteRow {
     
 }
+
+div.partial {
+    border: 1px solid black;
+     border-radius: 25px; 
+     padding: 10px;
+     margin-top: 10px;
+}
