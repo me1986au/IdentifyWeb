@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Core.Objects;
 using System.Linq;
 using System.Web;
 using IdentifyWeb.Models;
@@ -37,7 +38,7 @@ namespace IdentifyWeb.Services
             {
 
                 var person = dbContext.Persons.FirstOrDefault(x => x.Id == personId);
-
+                var personDto = new PersonDto();
                 return person;
             }
         }
@@ -49,9 +50,53 @@ namespace IdentifyWeb.Services
 
 
 
-                var person = dbContext.Per.FirstOrDefault(x => x.Id == personId);
+                var person = dbContext.Persons.FirstOrDefault();
 
                 return person;
+            }
+        }
+
+
+        private static bool SavePerson(PersonsAttributeDto PersonDto)
+        {
+            using (var dbContext = ApplicationDbContext.Create())
+            {
+
+                if (model != null)
+                {
+                    var userId = GetUserId();
+
+                    var person = new Person();
+
+                    if (model.PersonId != null)
+                    {
+                        if (!ManagePersonService.CheckIfPersonBelongsToUser(userId, model.PersonId))
+                            return View("ErrorPage", new ErrorViewModel("Unkown Person", "This Person Is Unknown"));
+
+                        person = ManagePersonService.GetPerson(model.PersonId);
+                        dbContext.Entry(person).State = EntityState.Modified;
+                    }
+                    else
+                    {
+                        person.Id = Guid.NewGuid().ToString();
+                        dbContext.Persons.Add(person);
+                    }
+
+
+                    person.ApplicationUserId = userId;
+                    person.FirstName = model.FirstName;
+                    person.LastName = model.LastName;
+                    person.Alias = model.Alias;
+                    person.DateOfBirth = model.DateOfBirth;
+                    person.Gender = model.Gender.Value;
+
+
+                    person.PersonsAttribute.Add(new PersonsAttribute());
+
+
+                    dbContext.SaveChanges();
+                }
+
             }
         }
 

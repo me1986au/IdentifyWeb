@@ -5,6 +5,8 @@ using IdentifyWeb.Models;
 
 namespace IdentifyWeb.Services
 {
+
+
     public class EmergencyContactAttributeDto : PersonsAttributeDto
     {
 
@@ -15,6 +17,37 @@ namespace IdentifyWeb.Services
 
     }
 
+
+    public class PersonDto
+    {
+        public string Id { get; set; }
+        public string ApplicationUserId { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Alias { get; set; }
+        public Gender Gender { get; set; }
+        public DateTime DateOfBirth { get; set; }
+
+
+        public  ICollection<PersonsAttribute> PersonsAttribute { get; set; }
+
+        public PersonDto()
+        {
+        }
+
+        public PersonDto(Person person)
+        {
+
+            Id = person.Id;
+            ApplicationUserId = person.ApplicationUserId;
+            FirstName = person.FirstName;
+            LastName = person.LastName;
+            Alias = person.Alias;
+            Gender = person.Gender;
+            DateOfBirth = person.DateOfBirth;
+        }
+
+    }
 
 
     public class PersonsAttributeDto

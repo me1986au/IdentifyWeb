@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using IdentifyWeb.Services;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
 
@@ -33,7 +34,7 @@ namespace IdentifyWeb.Models
             Gender = gender;
         }
 
-        public PersonViewModel(Person person)
+        public PersonViewModel(PersonDto person)
         {
             PersonId = person.Id;
             FirstName = person.FirstName;
@@ -44,7 +45,7 @@ namespace IdentifyWeb.Models
 
 
             EmergencyContactViewModels = new EmergencyContactViewModels();
-            EmergencyContactViewModels.Add(new EmergencyContactViewModel(1, "Michael Strange", "0423170746"));
+            EmergencyContactViewModels.Add(new EmergencyContactViewModel(1,"sdf-Sd-rt-g1-d2", "Michael","Strange","Snig", "0423170746"));
         }
 
         public string PersonId { get; set; }
@@ -76,6 +77,26 @@ namespace IdentifyWeb.Models
 
 
         public EmergencyContactViewModels EmergencyContactViewModels { get; set; }
+
+
+
+        public PersonDto ToDto(PersonViewModel model)
+        {
+            var personDto = new PersonDto();
+
+            PersonId = model.PersonId;
+            FirstName = model.FirstName;
+            LastName = model.LastName;
+            Alias = model.Alias;
+            DateOfBirth = model.DateOfBirth;
+            Gender = model.Gender;
+
+
+            return personDto;
+
+        }
+
+
     }
 
 

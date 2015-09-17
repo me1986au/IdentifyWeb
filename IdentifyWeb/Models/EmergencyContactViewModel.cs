@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Web;
 
 namespace IdentifyWeb.Models
@@ -12,19 +13,32 @@ namespace IdentifyWeb.Models
         {
         }
 
-        public EmergencyContactViewModel(int id, string name, string phoneNumber)
+        public EmergencyContactViewModel(int id, string personsAttributeId, string firstName, string lastName, string @alias, string phoneNumber)
         {
             Id = id;
-            Name = name;
+            PersonsAttributeId = personsAttributeId;
+            FirstName = firstName;
+            LastName = lastName;
+            Alias = alias;
             PhoneNumber = phoneNumber;
         }
 
         [Required]
         public int Id { get; set; }
+
+        public string PersonsAttributeId { get; set; }
+
         [Required]
-        public string Name { get; set; }
+        public string FirstName { get; set; }
+        [Required]
+        public string LastName { get; set; }
+        [Required]
+        public string Alias { get; set; }
         [Required]
         public string PhoneNumber { get; set; }
+
+        
+
     }
 
 

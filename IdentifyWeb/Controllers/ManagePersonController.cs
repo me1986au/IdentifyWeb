@@ -65,44 +65,7 @@ namespace IdentifyWeb.Controllers
                 return View(model);
             }
 
-            using (var dbContext = ApplicationDbContext.Create())
-            {
-
-                if (model != null)
-                {
-                    var userId = GetUserId();
-
-                    var person = new Person();
-
-                    if (model.PersonId != null)
-                    {
-                        if (!ManagePersonService.CheckIfPersonBelongsToUser(userId, model.PersonId))
-                            return View("ErrorPage", new ErrorViewModel("Unkown Person", "This Person Is Unknown"));
-
-                        person = ManagePersonService.GetPerson(model.PersonId);
-                        dbContext.Entry(person).State = EntityState.Modified;
-                    }
-                    else
-                    {
-                        person.Id = Guid.NewGuid().ToString();
-                        dbContext.Persons.Add(person);
-                    }
-
-
-                    person.ApplicationUserId = userId;
-                    person.FirstName = model.FirstName;
-                    person.LastName = model.LastName;
-                    person.Alias = model.Alias;
-                    person.DateOfBirth = model.DateOfBirth;
-                    person.Gender = model.Gender.Value;
-
-                    dbContext.Persons.
-
-
-                    dbContext.SaveChanges();
-                }
-
-            }
+           
 
             return RedirectToAction("Index");
 

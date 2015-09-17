@@ -3,7 +3,7 @@
 
 @{
 
-    Layout = "~/";
+    Layout = null;
     var newGuid = Guid.NewGuid();
     ViewBag.Guid = newGuid;
 
@@ -23,17 +23,36 @@
 </script>
 
 <div class="partial">
-    <div class="form-group">
-        <input type="hidden" name="EmergencyContactViewModels.Index" value=@ViewBag.Guid.ToString() />
-        @Html.HiddenFor(model => model.Id)
 
-        @Html.LabelFor(m => m.Name, new { @class = "col-md-2 control-label" })
+    <input type="hidden" name="EmergencyContactViewModels.Index" value=@ViewBag.Guid.ToString() />
+    @Html.HiddenFor(model => model.Id)
+    @Html.HiddenFor(model => model.PersonsAttributeId)
+
+    <div class="form-group">
+
+        @Html.LabelFor(m => m.FirstName, new { @class = "col-md-2 control-label" })
 
         <div class="col-md-10">
-            @Html.EditorFor(x => x.Name, new { @class = "form-control", data_val = "true", data_val_required = "The Name field is required." })
+            @Html.EditorFor(x => x.FirstName, new { @class = "form-control", data_val = "true", data_val_required = "The First Name field is required." })
         </div>
+    </div>
 
+    <div class="form-group">
 
+        @Html.LabelFor(m => m.LastName, new {@class = "col-md-2 control-label"})
+
+        <div class="col-md-10">
+            @Html.EditorFor(x => x.LastName, new {@class = "form-control", data_val = "true", data_val_required = "The Last Name field is required."})
+        </div>
+    </div>
+
+    <div class="form-group">
+
+        @Html.LabelFor(m => m.Alias, new { @class = "col-md-2 control-label" })
+
+        <div class="col-md-10">
+            @Html.EditorFor(x => x.Alias, new { @class = "form-control", data_val = "true", data_val_required = "The Alias field is required." })
+        </div>
     </div>
 
     <div class="form-group">
