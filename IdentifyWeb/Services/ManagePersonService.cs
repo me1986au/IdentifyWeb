@@ -4,6 +4,7 @@ using System.Data.Entity.Core.Objects;
 using System.Linq;
 using System.Web;
 using IdentifyWeb.Models;
+using System.Data.Entity;
 
 namespace IdentifyWeb.Services
 {
@@ -32,7 +33,7 @@ namespace IdentifyWeb.Services
             }
         }
 
-        public static Person GetPerson(string personId)
+        public static PersonDto GetPerson(string personId)
         {
             using (var dbContext = new ApplicationDbContext())
             {
@@ -57,23 +58,22 @@ namespace IdentifyWeb.Services
         }
 
 
-        private static bool SavePerson(PersonsAttributeDto PersonDto)
+        private static bool SavePerson(string userId, PersonDto personDto)
         {
             using (var dbContext = ApplicationDbContext.Create())
             {
 
-                if (model != null)
+                if (personDto != null)
                 {
-                    var userId = GetUserId();
 
                     var person = new Person();
 
-                    if (model.PersonId != null)
+                    if (personDto.Id != null)
                     {
-                        if (!ManagePersonService.CheckIfPersonBelongsToUser(userId, model.PersonId))
-                            return View("ErrorPage", new ErrorViewModel("Unkown Person", "This Person Is Unknown"));
+                        if (!ManagePersonService.CheckIfPersonBelongsToUser(userId, personDto.Id))
+                            return false;
 
-                        person = ManagePersonService.GetPerson(model.PersonId);
+                        person = ManagePersonService.GetPerson(personDto.Id);
                         dbContext.Entry(person).State = EntityState.Modified;
                     }
                     else
@@ -82,13 +82,19 @@ namespace IdentifyWeb.Services
                         dbContext.Persons.Add(person);
                     }
 
-
                     person.ApplicationUserId = userId;
-                    person.FirstName = model.FirstName;
-                    person.LastName = model.LastName;
-                    person.Alias = model.Alias;
-                    person.DateOfBirth = model.DateOfBirth;
-                    person.Gender = model.Gender.Value;
+                    person.FirstName = personDto.FirstName;
+                    person.LastName = personDto.LastName;
+                    person.Alias = personDto.Alias;
+                    person.DateOfBirth = personDto.DateOfBirth;
+                    person.Gender = personDto.Gender;
+
+                    PersonalSubAttribute personalSubAttribute = new PersonalSubAttribute();
+                    if (person.PersonsAttribute.Any(x => x.PersonalSubAttribute.Any()))
+                    {
+                        personalSubAttribute = Pw
+                    }
+
 
 
                     person.PersonsAttribute.Add(new PersonsAttribute());
@@ -98,6 +104,8 @@ namespace IdentifyWeb.Services
                 }
 
             }
+            return true;
+
         }
 
 
