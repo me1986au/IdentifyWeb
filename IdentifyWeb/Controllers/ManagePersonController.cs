@@ -65,7 +65,10 @@ namespace IdentifyWeb.Controllers
                 return View(model);
             }
 
-           
+
+
+
+            ManagePersonService.SavePerson(GetUserId(), model.ToDto());
 
             return RedirectToAction("Index");
 

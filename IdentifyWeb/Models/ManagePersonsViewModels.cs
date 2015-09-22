@@ -80,16 +80,16 @@ namespace IdentifyWeb.Models
 
 
 
-        public PersonDto ToDto(PersonViewModel model)
+        public PersonDto ToDto()
         {
             var personDto = new PersonDto();
 
-            PersonId = model.PersonId;
-            FirstName = model.FirstName;
-            LastName = model.LastName;
-            Alias = model.Alias;
-            DateOfBirth = model.DateOfBirth;
-            Gender = model.Gender;
+            personDto.Id = PersonId;
+            personDto.FirstName = FirstName;
+            personDto.LastName = LastName;
+            personDto.Alias = Alias;
+            personDto.DateOfBirth = DateOfBirth;
+            personDto.Gender = Gender.Value;
 
 
             return personDto;

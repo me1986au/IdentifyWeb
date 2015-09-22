@@ -46,7 +46,6 @@ namespace IdentifyWeb.Services
             Gender = person.Gender;
             DateOfBirth = person.DateOfBirth;
         }
-
     }
 
 

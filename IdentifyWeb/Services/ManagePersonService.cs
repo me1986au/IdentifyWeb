@@ -39,8 +39,8 @@ namespace IdentifyWeb.Services
             {
 
                 var person = dbContext.Persons.FirstOrDefault(x => x.Id == personId);
-                var personDto = new PersonDto();
-                return person;
+                var personDto = new PersonDto(person);
+                return personDto;
             }
         }
 
@@ -58,7 +58,7 @@ namespace IdentifyWeb.Services
         }
 
 
-        private static bool SavePerson(string userId, PersonDto personDto)
+        public static bool SavePerson(string userId, PersonDto personDto)
         {
             using (var dbContext = ApplicationDbContext.Create())
             {
@@ -73,7 +73,8 @@ namespace IdentifyWeb.Services
                         if (!ManagePersonService.CheckIfPersonBelongsToUser(userId, personDto.Id))
                             return false;
 
-                        person = ManagePersonService.GetPerson(personDto.Id);
+                        person  = dbContext.Persons.FirstOrDefault(x => x.Id == personDto.Id);
+
                         dbContext.Entry(person).State = EntityState.Modified;
                     }
                     else
@@ -81,23 +82,19 @@ namespace IdentifyWeb.Services
                         person.Id = Guid.NewGuid().ToString();
                         dbContext.Persons.Add(person);
                     }
+                    personDto.ApplicationUserId = userId;
 
-                    person.ApplicationUserId = userId;
-                    person.FirstName = personDto.FirstName;
-                    person.LastName = personDto.LastName;
-                    person.Alias = personDto.Alias;
-                    person.DateOfBirth = personDto.DateOfBirth;
-                    person.Gender = personDto.Gender;
+                    TransferPersonInfoFromDtoToEntity(personDto, person);
 
-                    PersonalSubAttribute personalSubAttribute = new PersonalSubAttribute();
-                    if (person.PersonsAttribute.Any(x => x.PersonalSubAttribute.Any()))
-                    {
-                        personalSubAttribute = Pw
-                    }
+                    //PersonalSubAttribute personalSubAttribute = new PersonalSubAttribute();
+                    //if (person.PersonsAttribute.Any(x => x.PersonalSubAttribute.Any()))
+                    //{
+                    //   // personalSubAttribute = Pw
+                    //}
 
 
 
-                    person.PersonsAttribute.Add(new PersonsAttribute());
+                    //person.PersonsAttribute.Add(new PersonsAttribute());
 
 
                     dbContext.SaveChanges();
@@ -106,6 +103,18 @@ namespace IdentifyWeb.Services
             }
             return true;
 
+        }
+
+
+        private static void TransferPersonInfoFromDtoToEntity(PersonDto sourceDto, Person targetEntity)
+        {
+            targetEntity.Id = sourceDto.Id;
+            targetEntity.ApplicationUserId = sourceDto.ApplicationUserId;
+            targetEntity.FirstName = sourceDto.FirstName;
+            targetEntity.LastName = sourceDto.LastName;
+            targetEntity.Alias = sourceDto.Alias;
+            targetEntity.DateOfBirth = sourceDto.DateOfBirth;
+            targetEntity.Gender = sourceDto.Gender;
         }
 
 
