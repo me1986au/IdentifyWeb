@@ -92,6 +92,40 @@ namespace IdentifyWeb.Models
             personDto.Gender = Gender.Value;
 
 
+            personDto.PersonsAttribute = new List<PersonsAttributeDto>();
+
+            foreach(var evm in EmergencyContactViewModels)
+            {
+
+                var personalAttributeDto = new PersonsAttributeDto();
+
+                personalAttributeDto.Id = evm.PersonsAttributeId;
+                personalAttributeDto.PersonId = personDto.Id;
+
+
+
+                PersonalSubAttributeDto personalSubAttributeDto = new PersonalSubAttributeDto();
+                personalSubAttributeDto.FirstName = FirstName;
+                personalSubAttributeDto.LastName = LastName;
+                personalSubAttributeDto.Alias = Alias;
+                personalSubAttributeDto.FirstName = FirstName;
+
+
+                personalAttributeDto.PersonalSubAttributeDtos.Add(personalSubAttributeDto);
+
+
+                var phoneNumberSubAttributeDto = new PhoneNumberSubAttributeDto();
+                phoneNumberSubAttributeDto.Number = evm.PhoneNumber;
+                personalAttributeDto.PhoneNumberSubAttributeDtos.Add(phoneNumberSubAttributeDto);
+
+
+
+                personDto.PersonsAttribute.Add(personalAttributeDto);
+
+            }
+
+
+
             return personDto;
 
         }

@@ -29,7 +29,7 @@ namespace IdentifyWeb.Services
         public DateTime DateOfBirth { get; set; }
 
 
-        public  ICollection<PersonsAttribute> PersonsAttribute { get; set; }
+        public  ICollection<PersonsAttributeDto> PersonsAttribute { get; set; }
 
         public PersonDto()
         {
@@ -51,6 +51,15 @@ namespace IdentifyWeb.Services
 
     public class PersonsAttributeDto
     {
+
+        public PersonsAttributeDto()
+        {
+            AddressSubAttributeDtos = new List<AddressSubAttributeDto>();
+            PhoneNumberSubAttributeDtos = new List<PhoneNumberSubAttributeDto>();
+            PersonalSubAttributeDtos = new List<PersonalSubAttributeDto>();
+            TimeFrameSubAttributeDtos = new List<TimeFrameSubAttributeDto>();
+        }
+
         public string Id { get; set; }
         public int PersonsAttributeCategoryId { get; set; }
 

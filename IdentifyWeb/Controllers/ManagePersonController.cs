@@ -14,6 +14,8 @@ namespace IdentifyWeb.Controllers
     [Authorize]
     public class ManagePersonController : ControllerBase
     {
+   
+
         //
         // GET: /Manage/Index
         public async Task<ActionResult> Index()

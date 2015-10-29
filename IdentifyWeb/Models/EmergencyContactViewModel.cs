@@ -23,11 +23,9 @@ namespace IdentifyWeb.Models
             PhoneNumber = phoneNumber;
         }
 
+
         [Required]
         public int Id { get; set; }
-
-        public string PersonsAttributeId { get; set; }
-
         [Required]
         public string FirstName { get; set; }
         [Required]
@@ -37,7 +35,9 @@ namespace IdentifyWeb.Models
         [Required]
         public string PhoneNumber { get; set; }
 
-        
+        public string PersonsAttributeId { get; set; }
+
+
 
     }
 

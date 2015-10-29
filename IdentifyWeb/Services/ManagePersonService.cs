@@ -73,7 +73,7 @@ namespace IdentifyWeb.Services
                         if (!ManagePersonService.CheckIfPersonBelongsToUser(userId, personDto.Id))
                             return false;
 
-                        person  = dbContext.Persons.FirstOrDefault(x => x.Id == personDto.Id);
+                        person = dbContext.Persons.FirstOrDefault(x => x.Id == personDto.Id);
 
                         dbContext.Entry(person).State = EntityState.Modified;
                     }
@@ -84,19 +84,16 @@ namespace IdentifyWeb.Services
                     }
                     personDto.ApplicationUserId = userId;
 
-                    TransferPersonInfoFromDtoToEntity(personDto, person);
+                    TransferPersonInfoFromDtoToEntity(personDto, person); ;
 
-                    //PersonalSubAttribute personalSubAttribute = new PersonalSubAttribute();
-                    //if (person.PersonsAttribute.Any(x => x.PersonalSubAttribute.Any()))
-                    //{
-                    //   // personalSubAttribute = Pw
-                    //}
-
+                    PersonalSubAttribute personalSubAttribute = new PersonalSubAttribute();
+                    if (person.PersonsAttribute.Any(x => x.PersonalSubAttribute.Any()))
+                    {
+                       personalSubAttribute.
+                    }
 
 
                     //person.PersonsAttribute.Add(new PersonsAttribute());
-
-
                     dbContext.SaveChanges();
                 }
 
@@ -115,6 +112,36 @@ namespace IdentifyWeb.Services
             targetEntity.Alias = sourceDto.Alias;
             targetEntity.DateOfBirth = sourceDto.DateOfBirth;
             targetEntity.Gender = sourceDto.Gender;
+        }
+
+
+        private static void UpdatePersonAttributuesWithinEntity(ApplicationDbContext dbContext, PersonDto sourceDto, Person targetEntity)
+        {
+            var dbPersonAttributes = targetEntity.PersonsAttribute.ToList();
+            var viewPersonAttributes = sourceDto.PersonsAttribute.ToList();
+
+            // Remove update Old Attributes
+
+            foreach (var dbAttr in dbPersonAttributes)
+            {
+                if (!viewPersonAttributes.Any(x => x.Id == dbAttr.Id))
+                {
+                    dbContext.Entry(dbAttr).State = EntityState.Deleted;
+
+                }
+                else
+                {
+                    dbContext.Entry(dbAttr).State = EntityState.Modified;
+                }
+            }
+
+            // foreach(var newAttribute)
+
+
+
+
+
+
         }
 
 
