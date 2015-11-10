@@ -5,6 +5,7 @@ using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Web;
 using IdentifyWeb.ControllerHelper;
+using IdentifyWeb.Services;
 
 namespace IdentifyWeb.Models
 {
@@ -14,9 +15,8 @@ namespace IdentifyWeb.Models
         {
         }
 
-        public EmergencyContactViewModel(int id, string personsAttributeId, string firstName, string lastName, string @alias, string phoneNumber)
+        public EmergencyContactViewModel(string personsAttributeId, string firstName, string lastName, string @alias, string phoneNumber)
         {
-            Id = id;
             PersonsAttributeId = personsAttributeId;
             FirstName = firstName;
             LastName = lastName;
@@ -25,8 +25,7 @@ namespace IdentifyWeb.Models
         }
 
 
-        [Required]
-        public int Id { get; set; }
+        
         [Required]
         public string FirstName { get; set; }
         [Required]
@@ -41,6 +40,10 @@ namespace IdentifyWeb.Models
 
 
 
+
+
+
+
     }
 
 
@@ -48,7 +51,36 @@ namespace IdentifyWeb.Models
 
     public class EmergencyContactViewModels : List<EmergencyContactViewModel>
     {
-        
+        public EmergencyContactViewModels(PersonDto dto)
+        {
+           if (dto.PersonsAttribute != null)
+            {
+                foreach( var attr in dto.PersonsAttribute)
+                {
+                    var emergencyContactViewModel = new EmergencyContactViewModel();
+
+                    emergencyContactViewModel.PersonsAttributeId = attr.Id;
+                    emergencyContactViewModel.PersonsAttributeCategoryId = attr.PersonsAttributeCategoryId;
+
+                    if (attr.PersonalSubAttributeDtos != null && attr.PersonalSubAttributeDtos.Any())
+                    {
+                        emergencyContactViewModel.FirstName = attr.PersonalSubAttributeDtos.First().FirstName;
+                        emergencyContactViewModel.LastName = attr.PersonalSubAttributeDtos.First().LastName;
+                        emergencyContactViewModel.Alias = attr.PersonalSubAttributeDtos.First().Alias;
+                    }
+
+                    if (attr.PhoneNumberSubAttributeDtos != null && attr.PhoneNumberSubAttributeDtos.Any())
+                    {
+                        emergencyContactViewModel.PhoneNumber = attr.PhoneNumberSubAttributeDtos.First().Number;
+                    }
+
+                    emergencyContactViewModel.PersonsAttributeId = attr.Id;
+                    this.Add(emergencyContactViewModel);
+                }
+            }
+
+        }
+
     }
 
 }

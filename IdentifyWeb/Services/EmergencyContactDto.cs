@@ -55,37 +55,43 @@ namespace IdentifyWeb.Services
                 dto.Id = pattr.Id;
                 dto.PersonsAttributeCategoryId = pattr.PersonsAttributeCategoryId;
 
-                foreach (var personalAttribute in pattr.PersonalSubAttribute)
+                if (pattr.PersonalSubAttribute != null)
                 {
+                    foreach (var personalAttribute in pattr.PersonalSubAttribute)
+                    {
 
-                    var dto1 = new PersonalSubAttribute();
+                        var dto1 = new PersonalSubAttributeDto();
 
-                    dto1.PersonsAttributeId = pattr.Id;
+                        dto1.PersonsAttributeId = pattr.Id;
 
-                    dto1.Id = personalAttribute.Id;
-                    dto1.FirstName = personalAttribute.FirstName;
-                    dto1.LastName = personalAttribute.LastName;
-                    dto1.Alias = personalAttribute.Alias;
+                        dto1.Id = personalAttribute.Id;
+                        dto1.FirstName = personalAttribute.FirstName;
+                        dto1.LastName = personalAttribute.LastName;
+                        dto1.Alias = personalAttribute.Alias;
 
-                    pattr.PersonalSubAttribute.Add(dto1);
-
-
+                        dto.PersonalSubAttributeDtos.Add(dto1);
+                    }
                 }
 
-                foreach (var phone in pattr.PhoneNumberSubAttribute)
+                if (pattr.PhoneNumberSubAttribute != null)
                 {
+                    foreach (var phone in pattr.PhoneNumberSubAttribute)
+                    {
 
-                    var dto1 = new PhoneNumberSubAttribute();
+                        var dto1 = new PhoneNumberSubAttributeDto();
 
-                    dto1.PersonsAttributeId = pattr.Id;
+                        dto1.PersonsAttributeId = pattr.Id;
 
-                    dto1.Id = phone.Id;
-                    dto1.Ext = phone.Ext;
-                    dto1.Number = phone.Number;
+                        dto1.Id = phone.Id;
+                        dto1.Ext = phone.Ext;
+                        dto1.Number = phone.Number;
 
-                    pattr.PhoneNumberSubAttribute.Add(dto1);
+                        dto.PhoneNumberSubAttributeDtos.Add(dto1);
 
+                    }
                 }
+
+                this.PersonsAttribute.Add(dto);
 
             }
         }
