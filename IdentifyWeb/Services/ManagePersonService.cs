@@ -37,7 +37,12 @@ namespace IdentifyWeb.Services
             using (var dbContext = new ApplicationDbContext())
             {
 
-                var person = dbContext.Persons.FirstOrDefault(x => x.Id == personId);
+                var person = dbContext.Persons
+                    .Include(p => p.PersonsAttribute)
+                    .Include(p => p.PersonsAttribute.Select(c => c.PersonalSubAttribute))
+                    .Include(p => p.PersonsAttribute.Select(c => c.PhoneNumberSubAttribute))
+                    .FirstOrDefault(x => x.Id == personId);
+
                 var personDto = new PersonDto(person);
                 return personDto;
             }
@@ -125,6 +130,11 @@ namespace IdentifyWeb.Services
                                 personalSubAttributeEntity.Alias = personalSubAttribute.Alias;
                                 
                                 personAttributeEntity.PersonalSubAttribute.Add(personalSubAttributeEntity);
+                            }
+
+                            if (person.PersonsAttribute == null)
+                            {
+                                person.PersonsAttribute = new List<PersonsAttribute>();
                             }
 
                             person.PersonsAttribute.Add(personAttributeEntity);

@@ -12,7 +12,7 @@ namespace IdentifyWeb.Services
 
         public EmergencyContactAttributeDto()
         {
-            PersonsAttributeCategoryId = (int) Enumerations.PersonsAttributeCategoryEnum.EmergencyContact;
+            PersonsAttributeCategoryId = (int)Enumerations.PersonsAttributeCategoryEnum.EmergencyContact;
         }
 
     }
@@ -29,7 +29,7 @@ namespace IdentifyWeb.Services
         public DateTime DateOfBirth { get; set; }
 
 
-        public  ICollection<PersonsAttributeDto> PersonsAttribute { get; set; }
+        public ICollection<PersonsAttributeDto> PersonsAttribute { get; set; }
 
         public PersonDto()
         {
@@ -45,80 +45,126 @@ namespace IdentifyWeb.Services
             Alias = person.Alias;
             Gender = person.Gender;
             DateOfBirth = person.DateOfBirth;
+
+            PersonsAttribute = new List<PersonsAttributeDto>();
+
+            foreach (var pattr in person.PersonsAttribute)
+            {
+                var dto = new PersonsAttributeDto();
+
+                dto.Id = pattr.Id;
+                dto.PersonsAttributeCategoryId = pattr.PersonsAttributeCategoryId;
+
+                foreach (var personalAttribute in pattr.PersonalSubAttribute)
+                {
+
+                    var dto1 = new PersonalSubAttribute();
+
+                    dto1.PersonsAttributeId = pattr.Id;
+
+                    dto1.Id = personalAttribute.Id;
+                    dto1.FirstName = personalAttribute.FirstName;
+                    dto1.LastName = personalAttribute.LastName;
+                    dto1.Alias = personalAttribute.Alias;
+
+                    pattr.PersonalSubAttribute.Add(dto1);
+
+
+                }
+
+                foreach (var phone in pattr.PhoneNumberSubAttribute)
+                {
+
+                    var dto1 = new PhoneNumberSubAttribute();
+
+                    dto1.PersonsAttributeId = pattr.Id;
+
+                    dto1.Id = phone.Id;
+                    dto1.Ext = phone.Ext;
+                    dto1.Number = phone.Number;
+
+                    pattr.PhoneNumberSubAttribute.Add(dto1);
+
+                }
+
+            }
         }
+
+
     }
 
 
-    public class PersonsAttributeDto
-    {
-
-        public PersonsAttributeDto()
+        public class PersonsAttributeDto
         {
-            AddressSubAttributeDtos = new List<AddressSubAttributeDto>();
-            PhoneNumberSubAttributeDtos = new List<PhoneNumberSubAttributeDto>();
-            PersonalSubAttributeDtos = new List<PersonalSubAttributeDto>();
-            TimeFrameSubAttributeDtos = new List<TimeFrameSubAttributeDto>();
+
+            public PersonsAttributeDto()
+            {
+                AddressSubAttributeDtos = new List<AddressSubAttributeDto>();
+                PhoneNumberSubAttributeDtos = new List<PhoneNumberSubAttributeDto>();
+                PersonalSubAttributeDtos = new List<PersonalSubAttributeDto>();
+                TimeFrameSubAttributeDtos = new List<TimeFrameSubAttributeDto>();
+            }
+
+            public string Id { get; set; }
+            public int PersonsAttributeCategoryId { get; set; }
+
+
+            public ICollection<AddressSubAttributeDto> AddressSubAttributeDtos { get; set; }
+            public ICollection<PhoneNumberSubAttributeDto> PhoneNumberSubAttributeDtos { get; set; }
+            public ICollection<PersonalSubAttributeDto> PersonalSubAttributeDtos { get; set; }
+            public ICollection<TimeFrameSubAttributeDto> TimeFrameSubAttributeDtos { get; set; }
+
+            public string PersonId { get; set; }
+
         }
 
-        public string Id { get; set; }
-        public int PersonsAttributeCategoryId { get; set; }
+
+        public class PersonalSubAttributeDto
+        {
+            public string Id { get; set; }
+            public string FirstName { get; set; }
+            public string LastName { get; set; }
+            public string Alias { get; set; }
+
+            public string PersonsAttributeId { get; set; }
+        }
+
+        public class PhoneNumberSubAttributeDto
+        {
+
+            public string Id { get; set; }
+            public string Ext { get; set; }
+            public string Number { get; set; }
+
+            public string PersonsAttributeId { get; set; }
+
+        }
+
+        public class AddressSubAttributeDto
+        {
+            public string Id { get; set; }
+            public string StreetAddress { get; set; }
+            public string StreetAddress1 { get; set; }
+            public string City { get; set; }
+            public string State { get; set; }
+            public string PostCode { get; set; }
+            public string CountryRegion { get; set; }
+
+            public string PersonsAttributeId { get; set; }
+
+        }
+
+        public class TimeFrameSubAttributeDto
+        {
+            public string Id { get; set; }
+            public DateTime From { get; set; }
+            public DateTime To { get; set; }
+
+            public string PersonsAttributeId { get; set; }
+
+        }
 
 
-        public ICollection<AddressSubAttributeDto> AddressSubAttributeDtos { get; set; }
-        public ICollection<PhoneNumberSubAttributeDto> PhoneNumberSubAttributeDtos { get; set; }
-        public ICollection<PersonalSubAttributeDto> PersonalSubAttributeDtos { get; set; }
-        public ICollection<TimeFrameSubAttributeDto> TimeFrameSubAttributeDtos { get; set; }
-
-        public string PersonId { get; set; }
 
     }
 
-
-    public class PersonalSubAttributeDto
-    {
-        public string Id { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string Alias { get; set; }
-
-        public string PersonsAttributeId { get; set; }
-    }
-
-    public class PhoneNumberSubAttributeDto
-    {
-
-        public string Id { get; set; }
-        public string Ext { get; set; }
-        public string Number { get; set; }
-
-        public string PersonsAttributeId { get; set; }
-
-    }
-
-    public class AddressSubAttributeDto
-    {
-        public string Id { get; set; }
-        public string StreetAddress { get; set; }
-        public string StreetAddress1 { get; set; }
-        public string City { get; set; }
-        public string State { get; set; }
-        public string PostCode { get; set; }
-        public string CountryRegion { get; set; }
-
-        public string PersonsAttributeId { get; set; }
-
-    }
-
-    public class TimeFrameSubAttributeDto
-    {
-        public string Id { get; set; }
-        public DateTime From { get; set; }
-        public DateTime To { get; set; }
-
-        public string PersonsAttributeId { get; set; }
-
-    }
-
-
-
-}
