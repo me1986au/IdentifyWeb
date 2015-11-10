@@ -12,6 +12,7 @@ namespace IdentifyWeb.Models
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {
+            //System.Data.Entity.Database.SetInitializer(new DropCreateDatabaseAlways<ApplicationDbContext>());
         }
 
         public static ApplicationDbContext Create()
@@ -28,6 +29,7 @@ namespace IdentifyWeb.Models
     [Table("Person")] // Code First Data Annotation needed to stop EF changing the table name Person to People
     public class Person
     {
+        [Key]
         public string Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -46,11 +48,11 @@ namespace IdentifyWeb.Models
     [Table("PersonsAttribute")]
     public class PersonsAttribute
     {
-        public string Id { get; set; }
+        [Key]
+        public String Id { get; set; }
         public int PersonsAttributeCategoryId { get; set; }
 
         [ForeignKey("PersonsAttributeCategoryId")]
-        [Required]
         public virtual PersonsAttributeCategory PersonsAttributeCategory { get; set; }
 
         public virtual ICollection<AddressSubAttribute> AddressSubAttribute { get; set; }
@@ -66,6 +68,8 @@ namespace IdentifyWeb.Models
     [Table("PersonsAttributeCategory")] 
     public class PersonsAttributeCategory
     {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public string Description { get; set; }
     }
@@ -73,6 +77,7 @@ namespace IdentifyWeb.Models
     [Table("AddressSubAttribute")]
     public class AddressSubAttribute
     {
+        [Key]
         public string Id { get; set; }
         public string StreetAddress { get; set; }
         public string StreetAddress1 { get; set; }
@@ -88,6 +93,7 @@ namespace IdentifyWeb.Models
 
     public class PhoneNumberSubAttribute
     {
+        [Key]
         public string Id { get; set; }
         public string Ext { get; set; }
         public string Number { get; set; }
@@ -99,6 +105,7 @@ namespace IdentifyWeb.Models
 
     public class PersonalSubAttribute
     {
+        [Key]
         public string Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -111,6 +118,8 @@ namespace IdentifyWeb.Models
 
     public class TimeFrameSubAttribute
     {
+
+        [Key]
         public string Id { get; set; }
         public DateTime From { get; set; }
         public DateTime To { get; set; }

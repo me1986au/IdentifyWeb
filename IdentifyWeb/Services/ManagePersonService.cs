@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity.Core.Objects;
 using System.Linq;
-using System.Web;
 using IdentifyWeb.Models;
 using System.Data.Entity;
+using System.Data.Entity.Validation;
 
 namespace IdentifyWeb.Services
 {
@@ -63,39 +62,90 @@ namespace IdentifyWeb.Services
             using (var dbContext = ApplicationDbContext.Create())
             {
 
-                if (personDto != null)
+                try
                 {
 
-                    var person = new Person();
-
-                    if (personDto.Id != null)
+                    if (personDto != null)
                     {
-                        if (!ManagePersonService.CheckIfPersonBelongsToUser(userId, personDto.Id))
-                            return false;
 
-                        person = dbContext.Persons.FirstOrDefault(x => x.Id == personDto.Id);
+                        var person = new Person();
 
-                        dbContext.Entry(person).State = EntityState.Modified;
+                        var isNew = personDto.Id == null;
+
+                        if (!isNew)
+                        {
+                            if (!ManagePersonService.CheckIfPersonBelongsToUser(userId, personDto.Id))
+                                return false;
+
+                            person = dbContext.Persons.FirstOrDefault(x => x.Id == personDto.Id);
+
+                            dbContext.Entry(person).State = EntityState.Modified;
+                        }
+                        else
+                        {
+                            dbContext.Persons.Add(person);
+                        }
+                        personDto.ApplicationUserId = userId;
+
+                        TransferPersonInfoFromDtoToEntity(personDto, person, isNew); ;
+
+                        var attributes = personDto.PersonsAttribute;
+
+                        //add new personal attributes.
+                        var newAttributes = attributes.Where(x => x.Id == null).ToList();
+
+                        foreach (var attr in newAttributes)
+                        {
+                            var personAttributeEntity = new PersonsAttribute();
+                            personAttributeEntity.PersonsAttributeCategoryId = attr.PersonsAttributeCategoryId;
+                            personAttributeEntity.PersonId = personDto.Id;
+                            personAttributeEntity.Id = Guid.NewGuid().ToString();
+                            dbContext.Entry(personAttributeEntity).State = EntityState.Added;
+
+
+                            personAttributeEntity.PhoneNumberSubAttribute = new List<PhoneNumberSubAttribute>();
+                            foreach (var phoneAttribute in attr.PhoneNumberSubAttributeDtos)
+                            {
+                                var phoneNumberSubAttributeEntity = new PhoneNumberSubAttribute();
+                                phoneNumberSubAttributeEntity.Id = Guid.NewGuid().ToString();
+                                phoneNumberSubAttributeEntity.Ext = phoneAttribute.Ext;
+                                phoneNumberSubAttributeEntity.Number = phoneAttribute.Number;
+
+                                personAttributeEntity.PhoneNumberSubAttribute.Add(phoneNumberSubAttributeEntity);
+                            }
+
+                            // 
+                            personAttributeEntity.PersonalSubAttribute = new List<PersonalSubAttribute>();
+                            foreach (var personalSubAttribute in attr.PersonalSubAttributeDtos)
+                            {
+                                var personalSubAttributeEntity = new PersonalSubAttribute();
+                                personalSubAttributeEntity.Id = Guid.NewGuid().ToString();
+                                personalSubAttributeEntity.FirstName = personalSubAttribute.FirstName;
+                                personalSubAttributeEntity.LastName = personalSubAttribute.LastName;
+                                personalSubAttributeEntity.Alias = personalSubAttribute.Alias;
+                                
+                                personAttributeEntity.PersonalSubAttribute.Add(personalSubAttributeEntity);
+                            }
+
+                            person.PersonsAttribute.Add(personAttributeEntity);
+
+                        }
+
+
+
+                        //person.PersonsAttribute.Add(new PersonsAttribute());
+                        dbContext.SaveChanges();
                     }
-                    else
-                    {
-                        person.Id = Guid.NewGuid().ToString();
-                        dbContext.Persons.Add(person);
-                    }
-                    personDto.ApplicationUserId = userId;
-
-                    TransferPersonInfoFromDtoToEntity(personDto, person); ;
-
-                    PersonalSubAttribute personalSubAttribute = new PersonalSubAttribute();
-                    if (person.PersonsAttribute.Any(x => x.PersonalSubAttribute.Any()))
-                    {
-                       personalSubAttribute.
-                    }
 
 
-                    //person.PersonsAttribute.Add(new PersonsAttribute());
-                    dbContext.SaveChanges();
                 }
+                catch (DbEntityValidationException e)
+                {
+
+                }
+
+
+
 
             }
             return true;
@@ -103,9 +153,9 @@ namespace IdentifyWeb.Services
         }
 
 
-        private static void TransferPersonInfoFromDtoToEntity(PersonDto sourceDto, Person targetEntity)
+        private static void TransferPersonInfoFromDtoToEntity(PersonDto sourceDto, Person targetEntity, bool generateNewPersonId = false)
         {
-            targetEntity.Id = sourceDto.Id;
+            targetEntity.Id = generateNewPersonId ? Guid.NewGuid().ToString() : sourceDto.Id;
             targetEntity.ApplicationUserId = sourceDto.ApplicationUserId;
             targetEntity.FirstName = sourceDto.FirstName;
             targetEntity.LastName = sourceDto.LastName;

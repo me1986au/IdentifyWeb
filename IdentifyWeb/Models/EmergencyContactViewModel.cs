@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Web;
+using IdentifyWeb.ControllerHelper;
 
 namespace IdentifyWeb.Models
 {
@@ -36,6 +37,7 @@ namespace IdentifyWeb.Models
         public string PhoneNumber { get; set; }
 
         public string PersonsAttributeId { get; set; }
+        public int PersonsAttributeCategoryId = (int)Enumerations.PersonsAttributeCategoryEnum.EmergencyContact;
 
 
 

@@ -45,7 +45,7 @@ namespace IdentifyWeb.Models
 
 
             EmergencyContactViewModels = new EmergencyContactViewModels();
-            EmergencyContactViewModels.Add(new EmergencyContactViewModel(1,"sdf-Sd-rt-g1-d2", "Michael","Strange","Snig", "0423170746"));
+            //EmergencyContactViewModels.Add(new EmergencyContactViewModel(1,"sdf-Sd-rt-g1-d2", "Michael","Strange","Snig", "0423170746"));
         }
 
         public string PersonId { get; set; }
@@ -94,37 +94,33 @@ namespace IdentifyWeb.Models
 
             personDto.PersonsAttribute = new List<PersonsAttributeDto>();
 
-            foreach(var evm in EmergencyContactViewModels)
+            if (EmergencyContactViewModels != null)
             {
+                foreach (var evm in EmergencyContactViewModels)
+                {
 
-                var personalAttributeDto = new PersonsAttributeDto();
+                    var personalAttributeDto = new PersonsAttributeDto();
 
-                personalAttributeDto.Id = evm.PersonsAttributeId;
-                personalAttributeDto.PersonId = personDto.Id;
+                    personalAttributeDto.Id = evm.PersonsAttributeId;
+                    personalAttributeDto.PersonId = personDto.Id;
+                    personalAttributeDto.PersonsAttributeCategoryId = evm.PersonsAttributeCategoryId;
 
+                    PersonalSubAttributeDto personalSubAttributeDto = new PersonalSubAttributeDto();
+                    personalSubAttributeDto.FirstName = FirstName;
+                    personalSubAttributeDto.LastName = LastName;
+                    personalSubAttributeDto.Alias = Alias;
+                    personalSubAttributeDto.FirstName = FirstName;
 
+                    personalAttributeDto.PersonalSubAttributeDtos.Add(personalSubAttributeDto);
 
-                PersonalSubAttributeDto personalSubAttributeDto = new PersonalSubAttributeDto();
-                personalSubAttributeDto.FirstName = FirstName;
-                personalSubAttributeDto.LastName = LastName;
-                personalSubAttributeDto.Alias = Alias;
-                personalSubAttributeDto.FirstName = FirstName;
+                    var phoneNumberSubAttributeDto = new PhoneNumberSubAttributeDto();
+                    phoneNumberSubAttributeDto.Number = evm.PhoneNumber;
+                    personalAttributeDto.PhoneNumberSubAttributeDtos.Add(phoneNumberSubAttributeDto);
 
+                    personDto.PersonsAttribute.Add(personalAttributeDto);
 
-                personalAttributeDto.PersonalSubAttributeDtos.Add(personalSubAttributeDto);
-
-
-                var phoneNumberSubAttributeDto = new PhoneNumberSubAttributeDto();
-                phoneNumberSubAttributeDto.Number = evm.PhoneNumber;
-                personalAttributeDto.PhoneNumberSubAttributeDtos.Add(phoneNumberSubAttributeDto);
-
-
-
-                personDto.PersonsAttribute.Add(personalAttributeDto);
-
+                }
             }
-
-
 
             return personDto;
 

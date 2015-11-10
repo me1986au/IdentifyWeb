@@ -43,6 +43,7 @@ namespace IdentifyWeb.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
+                    returnUrl = "/Manage/Index";
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");

@@ -15,7 +15,6 @@ namespace IdentifyWeb.Controllers
     public class ManagePersonController : ControllerBase
     {
    
-
         //
         // GET: /Manage/Index
         public async Task<ActionResult> Index()
@@ -37,7 +36,7 @@ namespace IdentifyWeb.Controllers
 
             var model = new PersonViewModel();
 
-            return View("AddModifyPerson");
+            return View("AddModifyPerson", model);
         }
 
         public async Task<ActionResult> ModifyPerson(string id)

@@ -76,7 +76,10 @@
        <div class="form-group">
            @Html.LabelFor(m => m.DateOfBirth, new {@class = "col-md-2 control-label"})
            <div class="col-md-10">
-               @Html.TextBoxFor(model => model.DateOfBirth, new {@class = "form-control date-picker", placeholder = "Enter Drop-off date here...", Value = Model.DateOfBirth.ToString("MM/dd/yyyy")})
+           
+                @Html.TextBoxFor(model => model.DateOfBirth, new { @class = "form-control date-picker", placeholder = "Enter Drop-off date here...", Value = string.Format("0:MM/dd/yyyy", Model.DateOfBirth.ToString()) })
+     
+
                @Html.ValidationMessageFor(model => model.DateOfBirth)
            </div>
        </div>
