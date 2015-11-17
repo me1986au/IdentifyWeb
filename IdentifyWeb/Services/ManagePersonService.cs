@@ -73,73 +73,11 @@ namespace IdentifyWeb.Services
                     if (personDto != null)
                     {
 
-                        var person = new Person();
-
-                        var isNew = personDto.Id == null;
-
-                        if (!isNew)
-                        {
-                            if (!ManagePersonService.CheckIfPersonBelongsToUser(userId, personDto.Id))
-                                return false;
-
-                            person = dbContext.Persons.FirstOrDefault(x => x.Id == personDto.Id);
-
-                            dbContext.Entry(person).State = EntityState.Modified;
-                        }
-                        else
-                        {
-                            dbContext.Persons.Add(person);
-                        }
-                        personDto.ApplicationUserId = userId;
-
-                        TransferPersonInfoFromDtoToEntity(personDto, person, isNew); ;
-
-                        var attributes = personDto.PersonsAttribute;
-
-                        //add new personal attributes.
-                        var newAttributes = attributes.Where(x => x.Id == null).ToList();
-
-                        foreach (var attr in newAttributes)
-                        {
-                            var personAttributeEntity = new PersonsAttribute();
-                            personAttributeEntity.PersonsAttributeCategoryId = attr.PersonsAttributeCategoryId;
-                            personAttributeEntity.PersonId = personDto.Id;
-                            personAttributeEntity.Id = Guid.NewGuid().ToString();
-                            dbContext.Entry(personAttributeEntity).State = EntityState.Added;
+                        var person = dbContext.Persons.Where(x => x.Id == personDto.Id).FirstOrDefault();
 
 
-                            personAttributeEntity.PhoneNumberSubAttribute = new List<PhoneNumberSubAttribute>();
-                            foreach (var phoneAttribute in attr.PhoneNumberSubAttributeDtos)
-                            {
-                                var phoneNumberSubAttributeEntity = new PhoneNumberSubAttribute();
-                                phoneNumberSubAttributeEntity.Id = Guid.NewGuid().ToString();
-                                phoneNumberSubAttributeEntity.Ext = phoneAttribute.Ext;
-                                phoneNumberSubAttributeEntity.Number = phoneAttribute.Number;
-
-                                personAttributeEntity.PhoneNumberSubAttribute.Add(phoneNumberSubAttributeEntity);
-                            }
-
-                            // 
-                            personAttributeEntity.PersonalSubAttribute = new List<PersonalSubAttribute>();
-                            foreach (var personalSubAttribute in attr.PersonalSubAttributeDtos)
-                            {
-                                var personalSubAttributeEntity = new PersonalSubAttribute();
-                                personalSubAttributeEntity.Id = Guid.NewGuid().ToString();
-                                personalSubAttributeEntity.FirstName = personalSubAttribute.FirstName;
-                                personalSubAttributeEntity.LastName = personalSubAttribute.LastName;
-                                personalSubAttributeEntity.Alias = personalSubAttribute.Alias;
-                                
-                                personAttributeEntity.PersonalSubAttribute.Add(personalSubAttributeEntity);
-                            }
-
-                            if (person.PersonsAttribute == null)
-                            {
-                                person.PersonsAttribute = new List<PersonsAttribute>();
-                            }
-
-                            person.PersonsAttribute.Add(personAttributeEntity);
-
-                        }
+                        var updatePersonEntity = new UpdatePersonEntity(dbContext, personDto, person, userId);
+                        var updatePersonAttributes = new UpdatePersonAttributes(dbContext, personDto.PersonsAttribute.ToList(), person,  userId);
 
 
 

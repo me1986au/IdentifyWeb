@@ -23,7 +23,7 @@ namespace IdentifyWeb.Services
         }
 
 
-        public void PerformAction()
+        public Person PerformAction()
         {
 
             if (_personDto.IsNew)
@@ -52,6 +52,8 @@ namespace IdentifyWeb.Services
                 }
 
             }
+
+            return _personEntity;
 
         }
 
@@ -99,7 +101,7 @@ namespace IdentifyWeb.Services
         private Person _personEntity;
         private ApplicationDbContext _dbContext;
 
-        public UpdatePersonAttributes(ApplicationDbContext dbContext, Person person, List<PersonsAttributeDto> personAttributeDtoList, string applicationUserId)
+        public UpdatePersonAttributes(ApplicationDbContext dbContext, List<PersonsAttributeDto> personAttributeDtoList, Person person, string applicationUserId)
         {
             _personAttributeDtoList = personAttributeDtoList;
             _personEntity = person;
@@ -126,26 +128,33 @@ namespace IdentifyWeb.Services
             _personEntity.PersonsAttribute.Add(personsAttributeEntity);
 
             //update subAttrbutes (
+            var personalSubAttribute = new UpdatePersonalSubAttribute(_dbContext, personsAttributeEntity, personsAttributeDto.PersonalSubAttributeDtos.ToList() , _applicationUserId);
+            var addressSubAttribute = new UpdateAddressSubAttribute(_dbContext, personsAttributeEntity, personsAttributeDto.AddressSubAttributeDtos.ToList(), _applicationUserId);
+            var phoneNumberSubAttribute = new UpdatePhoneNumberSubAttribute(_dbContext, personsAttributeEntity, personsAttributeDto.PhoneNumberSubAttributeDtos.ToList(), _applicationUserId);
+            var updateTimeFrameSubAttribute = new UpdateTimeFrameSubAttribute(_dbContext, personsAttributeEntity, personsAttributeDto.TimeFrameSubAttributeDtos.ToList(), _applicationUserId);
         }
 
         private void Update(PersonsAttributeDto personsAttributeDto)
         {
 
-            var personAttributeEntity = _personEntity.PersonsAttribute.Where(x => x.Id == personsAttributeDto.Id).FirstOrDefault(null);
+            var personsAttributeEntity = _personEntity.PersonsAttribute.Where(x => x.Id == personsAttributeDto.Id).FirstOrDefault(null);
 
-            if (personAttributeEntity == null)
+            if (personsAttributeEntity == null)
             {
                 throw new Exception("User is not authorised to update this persons attribute");
             }
 
 
-            TranferPersonsAttributeInfo(personsAttributeDto, personAttributeEntity);
+            TranferPersonsAttributeInfo(personsAttributeDto, personsAttributeEntity);
 
-            _dbContext.Entry(personAttributeEntity).State = System.Data.Entity.EntityState.Modified;
+            _dbContext.Entry(personsAttributeEntity).State = System.Data.Entity.EntityState.Modified;
 
 
             //update subAttrbutes (
-
+            var personalSubAttribute = new UpdatePersonalSubAttribute(_dbContext, personsAttributeEntity, personsAttributeDto.PersonalSubAttributeDtos.ToList(), _applicationUserId);
+            var addressSubAttribute = new UpdateAddressSubAttribute(_dbContext, personsAttributeEntity, personsAttributeDto.AddressSubAttributeDtos.ToList(), _applicationUserId);
+            var phoneNumberSubAttribute = new UpdatePhoneNumberSubAttribute(_dbContext, personsAttributeEntity, personsAttributeDto.PhoneNumberSubAttributeDtos.ToList(), _applicationUserId);
+            var updateTimeFrameSubAttribute = new UpdateTimeFrameSubAttribute(_dbContext, personsAttributeEntity, personsAttributeDto.TimeFrameSubAttributeDtos.ToList(), _applicationUserId);
 
         }
 
@@ -207,6 +216,7 @@ namespace IdentifyWeb.Services
             _personsAttributeEntity.PersonalSubAttribute.Add(personalSubAttributeEntity);
 
             //update subAttrbutes (
+
         }
 
         private void Update(PersonalSubAttributeDto personalSubAttributeDto)
@@ -281,7 +291,8 @@ namespace IdentifyWeb.Services
 
             _personsAttributeEntity.AddressSubAttribute.Add(addressSubAttributeEntity);
 
-            //update subAttrbutes (
+            var addressSubAttribute = new UpdateAddressSubAttribute(_dbContext, _personsAttributeEntity, _addressSubAttributeDtoList, _applicationUserId);
+
         }
 
         private void Update(AddressSubAttributeDto addressSubAttributeDto)
