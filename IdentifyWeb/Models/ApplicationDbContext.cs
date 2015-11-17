@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using IdentifyWeb.Services;
 
 namespace IdentifyWeb.Models
 {
@@ -42,6 +43,11 @@ namespace IdentifyWeb.Models
 
         public virtual ICollection<PersonsAttribute> PersonsAttribute { get; set; }
 
+        public Person()
+        {
+            PersonsAttribute = new List<PersonsAttribute>();
+        }
+
     }
 
 
@@ -63,9 +69,18 @@ namespace IdentifyWeb.Models
         public string PersonId { get; set; }
         public Person Person { get; set; }
 
+        public PersonsAttribute()
+        {
+            AddressSubAttribute = new List<AddressSubAttribute>();
+            PhoneNumberSubAttribute = new List<PhoneNumberSubAttribute>();
+            PersonalSubAttribute = new List<PersonalSubAttribute>();
+            TimeFrameSubAttribute = new List<TimeFrameSubAttribute>();
+
+        }
+
     }
 
-    [Table("PersonsAttributeCategory")] 
+    [Table("PersonsAttributeCategory")]
     public class PersonsAttributeCategory
     {
         [Key]
@@ -89,6 +104,34 @@ namespace IdentifyWeb.Models
         public string PersonsAttributeId { get; set; }
         public PersonsAttribute PersonsAttribute { get; set; }
 
+        public AddressSubAttribute()
+        {
+
+        }
+
+        public AddressSubAttribute(AddressSubAttributeDto dto, bool isNew = false)
+        {
+            Id = isNew ? Guid.NewGuid().ToString() : dto.Id;
+            StreetAddress = dto.StreetAddress;
+            StreetAddress1 = dto.StreetAddress1;
+            City = dto.City;
+            State = dto.State;
+            PostCode = dto.PostCode;
+            CountryRegion = dto.CountryRegion;
+
+
+        }
+
+        public void Update(AddressSubAttributeDto dto)
+        {
+            StreetAddress = dto.StreetAddress;
+            StreetAddress1 = dto.StreetAddress1;
+            City = dto.City;
+            State = dto.State;
+            PostCode = dto.PostCode;
+            CountryRegion = dto.CountryRegion;
+        }
+
     }
 
     public class PhoneNumberSubAttribute
@@ -100,6 +143,25 @@ namespace IdentifyWeb.Models
 
         public string PersonsAttributeId { get; set; }
         public PersonsAttribute PersonsAttribute { get; set; }
+
+        public PhoneNumberSubAttribute()
+        {
+
+        }
+
+        public PhoneNumberSubAttribute(PhoneNumberSubAttributeDto dto, bool isNew = false)
+        {
+            Id = isNew ? Guid.NewGuid().ToString() : dto.Id;
+            Ext = dto.Ext;
+            Number = dto.Number;
+
+        }
+
+        public void Update(PhoneNumberSubAttributeDto dto)
+        {
+            Ext = dto.Ext;
+            Number = dto.Number;
+        }
 
     }
 
@@ -114,6 +176,26 @@ namespace IdentifyWeb.Models
         public string PersonsAttributeId { get; set; }
         public PersonsAttribute PersonsAttribute { get; set; }
 
+        public PersonalSubAttribute()
+        {
+
+        }
+
+        public PersonalSubAttribute(PersonalSubAttributeDto dto, bool isNew = false)
+        {
+            Id = isNew ? Guid.NewGuid().ToString() : dto.Id;
+            FirstName = dto.FirstName;
+            LastName = dto.LastName;
+            Alias = dto.Alias;
+        }
+
+        public void Update(PersonalSubAttributeDto dto)
+        {
+            FirstName = dto.FirstName;
+            LastName = dto.LastName;
+            Alias = dto.Alias;
+        }
+
     }
 
     public class TimeFrameSubAttribute
@@ -126,6 +208,25 @@ namespace IdentifyWeb.Models
 
         public string PersonsAttributeId { get; set; }
         public PersonsAttribute PersonsAttribute { get; set; }
+
+        public TimeFrameSubAttribute()
+        {
+
+        }
+
+        public TimeFrameSubAttribute(TimeFrameSubAttributeDto dto, bool isNew = false)
+        {
+            Id = isNew ? Guid.NewGuid().ToString() : dto.Id;
+            From = dto.From;
+            To = dto.To;
+        }
+
+        public void Update(TimeFrameSubAttributeDto dto)
+        {
+            Id = dto.Id;
+            From = dto.From;
+            To = dto.To;
+        }
 
     }
 

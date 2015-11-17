@@ -2,9 +2,28 @@
 using System.Collections.Generic;
 using IdentifyWeb.ControllerHelper;
 using IdentifyWeb.Models;
+using static IdentifyWeb.ControllerHelper.Enumerations;
 
 namespace IdentifyWeb.Services
 {
+
+
+    public interface IDto
+    {
+        string Id { get; set; }
+        bool IsNew { get; }
+        string ModifiedStatus { get; set; }
+    }
+
+    public abstract class BaseDto
+    {
+        string Id { get; set; }
+        public bool IsNew
+        {
+            get { return string.IsNullOrEmpty(Id); }
+        }
+        public ModifyActionRequired ModifyActionRequired { get; set; }
+    }
 
 
     public class EmergencyContactAttributeDto : PersonsAttributeDto
@@ -18,7 +37,7 @@ namespace IdentifyWeb.Services
     }
 
 
-    public class PersonDto
+    public class PersonDto : BaseDto
     {
         public string Id { get; set; }
         public string ApplicationUserId { get; set; }
@@ -33,6 +52,7 @@ namespace IdentifyWeb.Services
 
         public PersonDto()
         {
+            PersonsAttribute = new List<PersonsAttributeDto>();
         }
 
         public PersonDto(Person person)
@@ -100,77 +120,78 @@ namespace IdentifyWeb.Services
     }
 
 
-        public class PersonsAttributeDto
+    public class PersonsAttributeDto : BaseDto
+    {
+
+        public PersonsAttributeDto()
         {
-
-            public PersonsAttributeDto()
-            {
-                AddressSubAttributeDtos = new List<AddressSubAttributeDto>();
-                PhoneNumberSubAttributeDtos = new List<PhoneNumberSubAttributeDto>();
-                PersonalSubAttributeDtos = new List<PersonalSubAttributeDto>();
-                TimeFrameSubAttributeDtos = new List<TimeFrameSubAttributeDto>();
-            }
-
-            public string Id { get; set; }
-            public int PersonsAttributeCategoryId { get; set; }
-
-
-            public ICollection<AddressSubAttributeDto> AddressSubAttributeDtos { get; set; }
-            public ICollection<PhoneNumberSubAttributeDto> PhoneNumberSubAttributeDtos { get; set; }
-            public ICollection<PersonalSubAttributeDto> PersonalSubAttributeDtos { get; set; }
-            public ICollection<TimeFrameSubAttributeDto> TimeFrameSubAttributeDtos { get; set; }
-
-            public string PersonId { get; set; }
-
+            AddressSubAttributeDtos = new List<AddressSubAttributeDto>();
+            PhoneNumberSubAttributeDtos = new List<PhoneNumberSubAttributeDto>();
+            PersonalSubAttributeDtos = new List<PersonalSubAttributeDto>();
+            TimeFrameSubAttributeDtos = new List<TimeFrameSubAttributeDto>();
         }
 
 
-        public class PersonalSubAttributeDto
-        {
-            public string Id { get; set; }
-            public string FirstName { get; set; }
-            public string LastName { get; set; }
-            public string Alias { get; set; }
-
-            public string PersonsAttributeId { get; set; }
-        }
-
-        public class PhoneNumberSubAttributeDto
-        {
-
-            public string Id { get; set; }
-            public string Ext { get; set; }
-            public string Number { get; set; }
-
-            public string PersonsAttributeId { get; set; }
-
-        }
-
-        public class AddressSubAttributeDto
-        {
-            public string Id { get; set; }
-            public string StreetAddress { get; set; }
-            public string StreetAddress1 { get; set; }
-            public string City { get; set; }
-            public string State { get; set; }
-            public string PostCode { get; set; }
-            public string CountryRegion { get; set; }
-
-            public string PersonsAttributeId { get; set; }
-
-        }
-
-        public class TimeFrameSubAttributeDto
-        {
-            public string Id { get; set; }
-            public DateTime From { get; set; }
-            public DateTime To { get; set; }
-
-            public string PersonsAttributeId { get; set; }
-
-        }
+        public string Id { get; set; }
+        public int PersonsAttributeCategoryId { get; set; }
 
 
+        public ICollection<AddressSubAttributeDto> AddressSubAttributeDtos { get; set; }
+        public ICollection<PhoneNumberSubAttributeDto> PhoneNumberSubAttributeDtos { get; set; }
+        public ICollection<PersonalSubAttributeDto> PersonalSubAttributeDtos { get; set; }
+        public ICollection<TimeFrameSubAttributeDto> TimeFrameSubAttributeDtos { get; set; }
+
+        public string PersonId { get; set; }
 
     }
+
+
+    public class PersonalSubAttributeDto : BaseDto
+    {
+        public string Id { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Alias { get; set; }
+
+        public string PersonsAttributeId { get; set; }
+    }
+
+    public class PhoneNumberSubAttributeDto : BaseDto
+    {
+
+        public string Id { get; set; }
+        public string Ext { get; set; }
+        public string Number { get; set; }
+
+        public string PersonsAttributeId { get; set; }
+
+    }
+
+    public class AddressSubAttributeDto : BaseDto
+    {
+        public string Id { get; set; }
+        public string StreetAddress { get; set; }
+        public string StreetAddress1 { get; set; }
+        public string City { get; set; }
+        public string State { get; set; }
+        public string PostCode { get; set; }
+        public string CountryRegion { get; set; }
+
+        public string PersonsAttributeId { get; set; }
+
+    }
+
+    public class TimeFrameSubAttributeDto : BaseDto
+    {
+        public string Id { get; set; }
+        public DateTime From { get; set; }
+        public DateTime To { get; set; }
+
+        public string PersonsAttributeId { get; set; }
+
+    }
+
+
+
+}
 

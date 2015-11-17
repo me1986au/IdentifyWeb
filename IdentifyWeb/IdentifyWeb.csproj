@@ -202,6 +202,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\EmergencyContactDto.cs" />
     <Compile Include="Services\ManagePersonService.cs" />
+    <Compile Include="Services\UpdatePersonAttrbiutesEntityBehavior.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>

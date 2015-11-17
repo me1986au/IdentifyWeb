@@ -44,7 +44,7 @@ namespace IdentifyWeb.Models
             DateOfBirth = person.DateOfBirth;
 
 
-            EmergencyContactViewModels = new EmergencyContactViewModels(person);
+            EmergencyContactViewModels = new EmergencyContactViewModels(person.PersonsAttribute);
 
             //EmergencyContactViewModels.Add(new EmergencyContactViewModel(1,"sdf-Sd-rt-g1-d2", "Michael","Strange","Snig", "0423170746"));
         }

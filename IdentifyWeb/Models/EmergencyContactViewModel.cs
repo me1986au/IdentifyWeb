@@ -24,6 +24,26 @@ namespace IdentifyWeb.Models
             PhoneNumber = phoneNumber;
         }
 
+        public EmergencyContactViewModel (PersonsAttributeDto dto)
+        {
+            PersonsAttributeId = dto.Id;
+            PersonsAttributeCategoryId = dto.PersonsAttributeCategoryId;
+
+            if (dto.PersonalSubAttributeDtos != null && dto.PersonalSubAttributeDtos.Any())
+            {
+                FirstName = dto.PersonalSubAttributeDtos.First().FirstName;
+                LastName = dto.PersonalSubAttributeDtos.First().LastName;
+                Alias = dto.PersonalSubAttributeDtos.First().Alias;
+            }
+
+            if (dto.PhoneNumberSubAttributeDtos != null && dto.PhoneNumberSubAttributeDtos.Any())
+            {
+                PhoneNumber = dto.PhoneNumberSubAttributeDtos.First().Number;
+            }
+
+            PersonsAttributeId = dto.Id;
+        }
+
 
         
         [Required]
@@ -39,11 +59,6 @@ namespace IdentifyWeb.Models
         public int PersonsAttributeCategoryId = (int)Enumerations.PersonsAttributeCategoryEnum.EmergencyContact;
 
 
-
-
-
-
-
     }
 
 
@@ -51,30 +66,14 @@ namespace IdentifyWeb.Models
 
     public class EmergencyContactViewModels : List<EmergencyContactViewModel>
     {
-        public EmergencyContactViewModels(PersonDto dto)
+        public EmergencyContactViewModels(ICollection<PersonsAttributeDto> dtos)
         {
-           if (dto.PersonsAttribute != null)
+           if (dtos != null)
             {
-                foreach( var attr in dto.PersonsAttribute)
+                foreach( var attr in dtos)
                 {
-                    var emergencyContactViewModel = new EmergencyContactViewModel();
-
-                    emergencyContactViewModel.PersonsAttributeId = attr.Id;
-                    emergencyContactViewModel.PersonsAttributeCategoryId = attr.PersonsAttributeCategoryId;
-
-                    if (attr.PersonalSubAttributeDtos != null && attr.PersonalSubAttributeDtos.Any())
-                    {
-                        emergencyContactViewModel.FirstName = attr.PersonalSubAttributeDtos.First().FirstName;
-                        emergencyContactViewModel.LastName = attr.PersonalSubAttributeDtos.First().LastName;
-                        emergencyContactViewModel.Alias = attr.PersonalSubAttributeDtos.First().Alias;
-                    }
-
-                    if (attr.PhoneNumberSubAttributeDtos != null && attr.PhoneNumberSubAttributeDtos.Any())
-                    {
-                        emergencyContactViewModel.PhoneNumber = attr.PhoneNumberSubAttributeDtos.First().Number;
-                    }
-
-                    emergencyContactViewModel.PersonsAttributeId = attr.Id;
+                    var emergencyContactViewModel = new EmergencyContactViewModel(attr);
+                   
                     this.Add(emergencyContactViewModel);
                 }
             }
