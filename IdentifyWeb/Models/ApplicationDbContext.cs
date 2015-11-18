@@ -13,7 +13,7 @@ namespace IdentifyWeb.Models
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {
-            System.Data.Entity.Database.SetInitializer(new DropCreateDatabaseAlways<ApplicationDbContext>());
+            System.Data.Entity.Database.SetInitializer(new EntitiesContextInitializer());
         }
 
         public static ApplicationDbContext Create()
@@ -22,40 +22,46 @@ namespace IdentifyWeb.Models
         }
 
         public DbSet<Person> Persons { get; set; }
+        public DbSet<PersonsAttribute> PersonsAttributes { get; set; }
+        public DbSet<PersonsAttributeCategory> PersonsAttributeCategories { get; set; }
+        public DbSet<PersonalSubAttribute> PersonalSubAttributes { get; set; }
+        public DbSet<PhoneNumberSubAttribute> PhoneNumberSubAttributes { get; set; }
+        public DbSet<TimeFrameSubAttribute> TimeFrameSubAttributes { get; set; }
+
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
 
-            //modelBuilder.Entity<PersonsAttribute>()
-            //  .HasRequired(t => t.Person)
-            //  .WithMany(t => t.PersonsAttribute)
-            //  .HasForeignKey(d => d.PersonId)
-            //  .WillCascadeOnDelete(true);
+            modelBuilder.Entity<PersonsAttribute>()
+              .HasRequired(t => t.Person)
+              .WithMany(t => t.PersonsAttribute)
+              .HasForeignKey(d => d.PersonId)
+              .WillCascadeOnDelete(true);
 
-            //modelBuilder.Entity<PersonalSubAttribute>()
-            //  .HasRequired(t => t.PersonsAttribute)
-            //  .WithMany(t => t.PersonalSubAttribute)
-            //  .HasForeignKey(d => d.PersonsAttributeId)
-            //  .WillCascadeOnDelete(true);
+            modelBuilder.Entity<PersonalSubAttribute>()
+              .HasRequired(t => t.PersonsAttribute)
+              .WithMany(t => t.PersonalSubAttribute)
+              .HasForeignKey(d => d.PersonsAttributeId)
+              .WillCascadeOnDelete(true);
 
 
-            //modelBuilder.Entity<PhoneNumberSubAttribute>()
-            //  .HasRequired(t => t.PersonsAttribute)
-            //  .WithMany(t => t.PhoneNumberSubAttribute)
-            //  .HasForeignKey(d => d.PersonsAttributeId)
-            //  .WillCascadeOnDelete(true);
+            modelBuilder.Entity<PhoneNumberSubAttribute>()
+              .HasRequired(t => t.PersonsAttribute)
+              .WithMany(t => t.PhoneNumberSubAttribute)
+              .HasForeignKey(d => d.PersonsAttributeId)
+              .WillCascadeOnDelete(true);
 
-            //modelBuilder.Entity<AddressSubAttribute>()
-            //    .HasRequired(t => t.PersonsAttribute)
-            //    .WithMany(t => t.AddressSubAttribute)
-            //    .HasForeignKey(d => d.PersonsAttributeId)
-            //    .WillCascadeOnDelete(true);
+            modelBuilder.Entity<AddressSubAttribute>()
+                .HasRequired(t => t.PersonsAttribute)
+                .WithMany(t => t.AddressSubAttribute)
+                .HasForeignKey(d => d.PersonsAttributeId)
+                .WillCascadeOnDelete(true);
 
-            //modelBuilder.Entity<TimeFrameSubAttribute>()
-            //  .HasRequired(t => t.PersonsAttribute)
-            //  .WithMany(t => t.TimeFrameSubAttribute)
-            //  .HasForeignKey(d => d.PersonsAttributeId)
-            //  .WillCascadeOnDelete(true);
+            modelBuilder.Entity<TimeFrameSubAttribute>()
+              .HasRequired(t => t.PersonsAttribute)
+              .WithMany(t => t.TimeFrameSubAttribute)
+              .HasForeignKey(d => d.PersonsAttributeId)
+              .WillCascadeOnDelete(true);
 
 
             base.OnModelCreating(modelBuilder);
@@ -268,7 +274,47 @@ namespace IdentifyWeb.Models
 
     }
 
+    public class EntitiesContextInitializer : DropCreateDatabaseIfModelChanges<ApplicationDbContext>
+    {
+        protected override void Seed(ApplicationDbContext context)
+        {
+            var appUser = new ApplicationUser();
 
+            appUser.Id = Guid.NewGuid().ToString();
+            appUser.FistName = "Michael";
+            appUser.LastName = "Strange";
+            appUser.Gender = Gender.Male;
+            appUser.DateOfBirth = DateTime.Now;
+            appUser.Country = "Aus";
+            appUser.State = "WA";
+            appUser.PostCode = "6027";
+
+            appUser.PhoneNumber = "940235454";
+            appUser.PhoneNumberConfirmed = false;
+            appUser.TwoFactorEnabled = false;
+
+            appUser.LockoutEnabled = true;
+            appUser.AccessFailedCount = 0;
+            appUser.UserName = "me_1986au@hotmail.com";
+
+            appUser.PasswordHash = "ANtUN7jEFNzDNzxDQuYjnH9PO/WWVGEYEzLgQ2+4oN3N9Sbk++dbz6C577t9I3Pduw==";
+            appUser.SecurityStamp = "e99fd978-c92a-4ea7-a7c7-e2379c3acc6f";
+            appUser.Email = "me_1986au@hotmail.com";
+            appUser.EmailConfirmed = false;
+
+
+            context.Users.Add(appUser);
+
+            var personAttributeCategory = new PersonsAttributeCategory();
+                personAttributeCategory.Id = 1;
+            personAttributeCategory.Description = "Emergency Contact";
+
+            context.PersonsAttributeCategories.Add(personAttributeCategory);
+            context.SaveChanges();
+
+        }
+    }
 
 }
-//s
+
+

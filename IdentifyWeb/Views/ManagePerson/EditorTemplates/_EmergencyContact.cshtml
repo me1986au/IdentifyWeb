@@ -44,7 +44,7 @@
 
 </script>
 
-<div class="partial" id="EmergencyContactViewModels_1111dc17-8655-4d55-aab2-284f9c2a4cd3__ModifyActionRequired">
+<div class="partial" hidden="@(Model.ModifyActionRequired == IdentifyWeb.ControllerHelper.Enumerations.ModifyActionRequired.Delete? "hidden" : null)">
 
     <input type="hidden" name="EmergencyContactViewModels.Index" value=@ViewBag.Guid.ToString() />
     @Html.HiddenFor(model => model.PersonsAttributeId)
