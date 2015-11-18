@@ -13,21 +13,45 @@
 <script type="text/javascript">
 
     $(document).ready(function () {
-        $("a.deleteRow").on("click", function () {
-            $(this).closest("div.partial").remove();
-            return false;
-        });
+        
 
     });
 
+    function deleteRow(caller) {
+
+        var div = $(caller).closest("div.partial");
+
+         //alert(div.attr('id'));
+
+        var personsAttributeId = $(div).children('[id$="PersonsAttributeId"]:first').attr("value");
+
+        if (personsAttributeId == null || personsAttributeId == "")
+        {
+            $(div).closest("div.partial").remove();
+        }
+        else
+        {
+            var modifyActionRequiredHf = $(div).children('[id$="ModifyActionRequired"]:first');
+
+            $(div).hide();
+            $(modifyActionRequiredHf).val("Delete");
+        }
+
+
+        return false;
+    }
+     
+
 </script>
 
-<div class="partial">
+<div class="partial" id="EmergencyContactViewModels_1111dc17-8655-4d55-aab2-284f9c2a4cd3__ModifyActionRequired">
 
     <input type="hidden" name="EmergencyContactViewModels.Index" value=@ViewBag.Guid.ToString() />
     @Html.HiddenFor(model => model.PersonsAttributeId)
     @Html.HiddenFor(model => model.PersonsAttributeCategoryId)
-
+    @Html.HiddenFor(model => model.PhoneNumberSubAttributeId)
+    @Html.HiddenFor(model => model.PersonalSubAttributeId)
+    @Html.HiddenFor(model => model.ModifyActionRequired)
 
     <div class="form-group">
 
@@ -62,11 +86,11 @@
         <div class="col-md-10">
             @Html.EditorFor(x => x.PhoneNumber, new { data_val = "true", data_val_required = "The PhoneNumber field is required." })
         </div>
-
+        
     </div>
     <div class="form-group">
         <div class="col-md-10">
-            <a href="#" class="deleteRow">Delete</a>
+            <a href="#" class="deleteRow" onclick="deleteRow(this)" >Delete</a>
         </div>
     </div>
 

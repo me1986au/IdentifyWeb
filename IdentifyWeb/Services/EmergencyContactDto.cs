@@ -17,7 +17,7 @@ namespace IdentifyWeb.Services
 
     public abstract class BaseDto
     {
-        string Id { get; set; }
+        public string Id { get; set; }
         public bool IsNew
         {
             get { return string.IsNullOrEmpty(Id); }
@@ -39,7 +39,6 @@ namespace IdentifyWeb.Services
 
     public class PersonDto : BaseDto
     {
-        public string Id { get; set; }
         public string ApplicationUserId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -132,7 +131,6 @@ namespace IdentifyWeb.Services
         }
 
 
-        public string Id { get; set; }
         public int PersonsAttributeCategoryId { get; set; }
 
 
@@ -148,7 +146,6 @@ namespace IdentifyWeb.Services
 
     public class PersonalSubAttributeDto : BaseDto
     {
-        public string Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Alias { get; set; }
@@ -159,7 +156,6 @@ namespace IdentifyWeb.Services
     public class PhoneNumberSubAttributeDto : BaseDto
     {
 
-        public string Id { get; set; }
         public string Ext { get; set; }
         public string Number { get; set; }
 
@@ -169,7 +165,6 @@ namespace IdentifyWeb.Services
 
     public class AddressSubAttributeDto : BaseDto
     {
-        public string Id { get; set; }
         public string StreetAddress { get; set; }
         public string StreetAddress1 { get; set; }
         public string City { get; set; }
@@ -183,7 +178,6 @@ namespace IdentifyWeb.Services
 
     public class TimeFrameSubAttributeDto : BaseDto
     {
-        public string Id { get; set; }
         public DateTime From { get; set; }
         public DateTime To { get; set; }
 

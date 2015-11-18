@@ -34,7 +34,7 @@ namespace IdentifyWeb.Controllers
             ViewBag.SaveText = "Add Person";
 
 
-            var model = new PersonViewModel();
+            var model = new PersonViewModel(Enumerations.ModifyActionRequired.Add);
 
             return View("AddModifyPerson", model);
         }
@@ -106,7 +106,7 @@ namespace IdentifyWeb.Controllers
         [OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
         public async Task<ActionResult> AddEmergencyContact()
         {
-            var model =  new EmergencyContactViewModel();
+            var model =  new EmergencyContactViewModel(Enumerations.ModifyActionRequired.Add);
            
             return View("EditorTemplates/_EmergencyContact", model);
         }

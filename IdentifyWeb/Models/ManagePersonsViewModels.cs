@@ -5,6 +5,7 @@ using System.Linq;
 using IdentifyWeb.Services;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
+using static IdentifyWeb.ControllerHelper.Enumerations;
 
 namespace IdentifyWeb.Models
 {
@@ -23,6 +24,10 @@ namespace IdentifyWeb.Models
     {
         private DateTime _dateOfBirth;
         public PersonViewModel() { }
+
+        public PersonViewModel(ModifyActionRequired modifyActionRequired) {
+            ModifyActionRequired = modifyActionRequired;
+        }
 
         public PersonViewModel(string personId, string firstName, string lastName, string @alias, DateTime dateOfBirth, Gender? gender)
         {
@@ -43,13 +48,16 @@ namespace IdentifyWeb.Models
             Gender = person.Gender;
             DateOfBirth = person.DateOfBirth;
 
+            ModifyActionRequired = ModifyActionRequired.Update;
 
             EmergencyContactViewModels = new EmergencyContactViewModels(person.PersonsAttribute);
+
 
             //EmergencyContactViewModels.Add(new EmergencyContactViewModel(1,"sdf-Sd-rt-g1-d2", "Michael","Strange","Snig", "0423170746"));
         }
 
         public string PersonId { get; set; }
+
 
         [Required]
         [Display(Name = "First Name")]
@@ -76,6 +84,8 @@ namespace IdentifyWeb.Models
             set { _dateOfBirth = value; }
         }
 
+        public ModifyActionRequired ModifyActionRequired { get; set; }
+
 
         public EmergencyContactViewModels EmergencyContactViewModels { get; set; }
 
@@ -92,6 +102,8 @@ namespace IdentifyWeb.Models
             personDto.DateOfBirth = DateOfBirth;
             personDto.Gender = Gender.Value;
 
+            personDto.ModifyActionRequired = ModifyActionRequired;
+
 
             personDto.PersonsAttribute = new List<PersonsAttributeDto>();
 
@@ -100,25 +112,32 @@ namespace IdentifyWeb.Models
                 foreach (var evm in EmergencyContactViewModels)
                 {
 
-                    var personalAttributeDto = new PersonsAttributeDto();
+                    var personsAttributeDto = new PersonsAttributeDto();
 
-                    personalAttributeDto.Id = evm.PersonsAttributeId;
-                    personalAttributeDto.PersonId = personDto.Id;
-                    personalAttributeDto.PersonsAttributeCategoryId = evm.PersonsAttributeCategoryId;
+                    personsAttributeDto.Id = evm.PersonsAttributeId;
+                    personsAttributeDto.PersonId = personDto.Id;
+                    personsAttributeDto.PersonsAttributeCategoryId = evm.PersonsAttributeCategoryId;
+                    personsAttributeDto.ModifyActionRequired = evm.ModifyActionRequired; 
 
                     PersonalSubAttributeDto personalSubAttributeDto = new PersonalSubAttributeDto();
-                    personalSubAttributeDto.FirstName = FirstName;
-                    personalSubAttributeDto.LastName = LastName;
-                    personalSubAttributeDto.Alias = Alias;
-                    personalSubAttributeDto.FirstName = FirstName;
+                    personalSubAttributeDto.Id = evm.PersonalSubAttributeId;
+                    personalSubAttributeDto.FirstName = evm.FirstName;
+                    personalSubAttributeDto.LastName = evm.LastName;
+                    personalSubAttributeDto.Alias = evm.Alias;
+                    personalSubAttributeDto.FirstName = evm.FirstName;
 
-                    personalAttributeDto.PersonalSubAttributeDtos.Add(personalSubAttributeDto);
+                    personalSubAttributeDto.ModifyActionRequired = evm.ModifyActionRequired;
+
+                    personsAttributeDto.PersonalSubAttributeDtos.Add(personalSubAttributeDto);
 
                     var phoneNumberSubAttributeDto = new PhoneNumberSubAttributeDto();
+                    phoneNumberSubAttributeDto.Id = evm.PhoneNumberSubAttributeId;
                     phoneNumberSubAttributeDto.Number = evm.PhoneNumber;
-                    personalAttributeDto.PhoneNumberSubAttributeDtos.Add(phoneNumberSubAttributeDto);
+                    phoneNumberSubAttributeDto.ModifyActionRequired = evm.ModifyActionRequired;
 
-                    personDto.PersonsAttribute.Add(personalAttributeDto);
+                    personsAttributeDto.PhoneNumberSubAttributeDtos.Add(phoneNumberSubAttributeDto);
+
+                    personDto.PersonsAttribute.Add(personsAttributeDto);
 
                 }
             }

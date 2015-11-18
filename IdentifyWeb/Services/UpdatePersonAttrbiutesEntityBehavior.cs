@@ -32,7 +32,7 @@ namespace IdentifyWeb.Services
             }
             else
             {
-                var personEntity = _dbContext.Persons.Where(x => x.Id == _personDto.Id && x.ApplicationUserId == _applicationUserId).FirstOrDefault(null);
+                var personEntity = _dbContext.Persons.Where(x => x.Id == _personDto.Id && x.ApplicationUserId == _applicationUserId).FirstOrDefault();
 
                 if (personEntity == null)
                 {
@@ -81,12 +81,17 @@ namespace IdentifyWeb.Services
 
         private void TransferInfo()
         {
+            if (_personDto.IsNew)
+            {
+                    _personEntity.Id = Guid.NewGuid().ToString();
+                _personEntity.ApplicationUserId = _applicationUserId;
+            }
+
             _personEntity.FirstName = _personDto.FirstName;
             _personEntity.LastName = _personDto.LastName;
             _personEntity.Alias = _personDto.Alias;
             _personEntity.Gender = _personDto.Gender;
             _personEntity.DateOfBirth = _personDto.DateOfBirth;
-            _personEntity.ApplicationUserId = _personDto.ApplicationUserId;
 
         }
 
@@ -123,21 +128,29 @@ namespace IdentifyWeb.Services
         private void Add(PersonsAttributeDto personsAttributeDto)
         {
             var personsAttributeEntity = new PersonsAttribute();
-            TranferPersonsAttributeInfo(personsAttributeDto, personsAttributeEntity);
+            TranferInfo(personsAttributeDto, personsAttributeEntity);
 
             _personEntity.PersonsAttribute.Add(personsAttributeEntity);
 
             //update subAttrbutes (
             var personalSubAttribute = new UpdatePersonalSubAttribute(_dbContext, personsAttributeEntity, personsAttributeDto.PersonalSubAttributeDtos.ToList() , _applicationUserId);
+            personalSubAttribute.PerformAction();
+
             var addressSubAttribute = new UpdateAddressSubAttribute(_dbContext, personsAttributeEntity, personsAttributeDto.AddressSubAttributeDtos.ToList(), _applicationUserId);
+            addressSubAttribute.PerformAction();
+
             var phoneNumberSubAttribute = new UpdatePhoneNumberSubAttribute(_dbContext, personsAttributeEntity, personsAttributeDto.PhoneNumberSubAttributeDtos.ToList(), _applicationUserId);
+            phoneNumberSubAttribute.PerformAction();
+
             var updateTimeFrameSubAttribute = new UpdateTimeFrameSubAttribute(_dbContext, personsAttributeEntity, personsAttributeDto.TimeFrameSubAttributeDtos.ToList(), _applicationUserId);
+            updateTimeFrameSubAttribute.PerformAction();
+
         }
 
         private void Update(PersonsAttributeDto personsAttributeDto)
         {
 
-            var personsAttributeEntity = _personEntity.PersonsAttribute.Where(x => x.Id == personsAttributeDto.Id).FirstOrDefault(null);
+            var personsAttributeEntity = _personEntity.PersonsAttribute.Where(x => x.Id == personsAttributeDto.Id).FirstOrDefault();
 
             if (personsAttributeEntity == null)
             {
@@ -145,23 +158,29 @@ namespace IdentifyWeb.Services
             }
 
 
-            TranferPersonsAttributeInfo(personsAttributeDto, personsAttributeEntity);
+            TranferInfo(personsAttributeDto, personsAttributeEntity);
 
             _dbContext.Entry(personsAttributeEntity).State = System.Data.Entity.EntityState.Modified;
 
 
             //update subAttrbutes (
             var personalSubAttribute = new UpdatePersonalSubAttribute(_dbContext, personsAttributeEntity, personsAttributeDto.PersonalSubAttributeDtos.ToList(), _applicationUserId);
-            var addressSubAttribute = new UpdateAddressSubAttribute(_dbContext, personsAttributeEntity, personsAttributeDto.AddressSubAttributeDtos.ToList(), _applicationUserId);
-            var phoneNumberSubAttribute = new UpdatePhoneNumberSubAttribute(_dbContext, personsAttributeEntity, personsAttributeDto.PhoneNumberSubAttributeDtos.ToList(), _applicationUserId);
-            var updateTimeFrameSubAttribute = new UpdateTimeFrameSubAttribute(_dbContext, personsAttributeEntity, personsAttributeDto.TimeFrameSubAttributeDtos.ToList(), _applicationUserId);
+            personalSubAttribute.PerformAction();
 
+            var addressSubAttribute = new UpdateAddressSubAttribute(_dbContext, personsAttributeEntity, personsAttributeDto.AddressSubAttributeDtos.ToList(), _applicationUserId);
+            addressSubAttribute.PerformAction();
+
+            var phoneNumberSubAttribute = new UpdatePhoneNumberSubAttribute(_dbContext, personsAttributeEntity, personsAttributeDto.PhoneNumberSubAttributeDtos.ToList(), _applicationUserId);
+            phoneNumberSubAttribute.PerformAction();
+
+            var updateTimeFrameSubAttribute = new UpdateTimeFrameSubAttribute(_dbContext, personsAttributeEntity, personsAttributeDto.TimeFrameSubAttributeDtos.ToList(), _applicationUserId);
+            updateTimeFrameSubAttribute.PerformAction();
         }
 
         private void Delete(PersonsAttributeDto personsAttributeDto)
         {
 
-            var personAttributeEntity = _personEntity.PersonsAttribute.Where(x => x.Id == personsAttributeDto.Id).FirstOrDefault(null);
+            var personAttributeEntity = _personEntity.PersonsAttribute.Where(x => x.Id == personsAttributeDto.Id).FirstOrDefault();
 
             if (personAttributeEntity == null)
             {
@@ -173,8 +192,13 @@ namespace IdentifyWeb.Services
 
 
 
-        private void TranferPersonsAttributeInfo(PersonsAttributeDto dto, PersonsAttribute entity)
+        private void TranferInfo(PersonsAttributeDto dto, PersonsAttribute entity)
         {
+            if (dto.IsNew)
+            {
+                entity.Id = Guid.NewGuid().ToString();
+            }
+
             entity.PersonsAttributeCategoryId = dto.PersonsAttributeCategoryId;
 
         }
@@ -222,7 +246,7 @@ namespace IdentifyWeb.Services
         private void Update(PersonalSubAttributeDto personalSubAttributeDto)
         {
 
-            var personalSubAttributeEntity = _personsAttributeEntity.PersonalSubAttribute.Where(x => x.Id == personalSubAttributeDto.Id).FirstOrDefault(null);
+            var personalSubAttributeEntity = _personsAttributeEntity.PersonalSubAttribute.Where(x => x.Id == personalSubAttributeDto.Id).FirstOrDefault();
 
             if (personalSubAttributeEntity == null)
             {
@@ -238,7 +262,7 @@ namespace IdentifyWeb.Services
         private void Delete(PersonalSubAttributeDto personalSubAttributeDto)
         {
 
-            var personalSubAttributeEntity = _personsAttributeEntity.PersonalSubAttribute.Where(x => x.Id == personalSubAttributeDto.Id).FirstOrDefault(null);
+            var personalSubAttributeEntity = _personsAttributeEntity.PersonalSubAttribute.Where(x => x.Id == personalSubAttributeDto.Id).FirstOrDefault();
 
             if (personalSubAttributeEntity == null)
             {
@@ -251,6 +275,11 @@ namespace IdentifyWeb.Services
 
         private void TransferInfo(PersonalSubAttributeDto dto, PersonalSubAttribute entity)
         {
+            if (dto.IsNew)
+            {
+                entity.Id = Guid.NewGuid().ToString();
+            }
+
             entity.FirstName = dto.FirstName;
             entity.LastName = dto.LastName;
             entity.Alias = dto.Alias;
@@ -298,11 +327,11 @@ namespace IdentifyWeb.Services
         private void Update(AddressSubAttributeDto addressSubAttributeDto)
         {
 
-            var addressSubAttributeEntity = _personsAttributeEntity.AddressSubAttribute.Where(x => x.Id == addressSubAttributeDto.Id).FirstOrDefault(null);
+            var addressSubAttributeEntity = _personsAttributeEntity.AddressSubAttribute.Where(x => x.Id == addressSubAttributeDto.Id).FirstOrDefault();
 
             if (addressSubAttributeEntity == null)
             {
-                throw new Exception("User is not authorised to update this personal sub attribute");
+                throw new Exception("User is not authorised to update this address sub attribute");
             }
 
             TransferInfo(addressSubAttributeDto, addressSubAttributeEntity);
@@ -314,7 +343,7 @@ namespace IdentifyWeb.Services
         private void Delete(AddressSubAttributeDto addressSubAttributeDto)
         {
 
-            var addressSubAttributeEntity = _personsAttributeEntity.AddressSubAttribute.Where(x => x.Id == addressSubAttributeDto.Id).FirstOrDefault(null);
+            var addressSubAttributeEntity = _personsAttributeEntity.AddressSubAttribute.Where(x => x.Id == addressSubAttributeDto.Id).FirstOrDefault();
 
             if (addressSubAttributeEntity == null)
             {
@@ -327,6 +356,11 @@ namespace IdentifyWeb.Services
 
         private void TransferInfo(AddressSubAttributeDto dto, AddressSubAttribute entity)
         {
+            if (dto.IsNew)
+            {
+                entity.Id = Guid.NewGuid().ToString();
+            }
+
             entity.StreetAddress = dto.StreetAddress;
             entity.StreetAddress1 = dto.StreetAddress1;
             entity.City = dto.City;
@@ -376,11 +410,11 @@ namespace IdentifyWeb.Services
         private void Update(PhoneNumberSubAttributeDto phoneNumberSubAttributeDto)
         {
 
-            var phoneNumberSubAttributeEntity = _personsAttributeEntity.PhoneNumberSubAttribute.Where(x => x.Id == phoneNumberSubAttributeDto.Id).FirstOrDefault(null);
+            var phoneNumberSubAttributeEntity = _personsAttributeEntity.PhoneNumberSubAttribute.Where(x => x.Id == phoneNumberSubAttributeDto.Id).FirstOrDefault();
 
             if (phoneNumberSubAttributeEntity == null)
             {
-                throw new Exception("User is not authorised to update this personal sub attribute");
+                throw new Exception("User is not authorised to update this phone number sub attribute");
             }
 
             TransferInfo(phoneNumberSubAttributeDto, phoneNumberSubAttributeEntity);
@@ -392,7 +426,7 @@ namespace IdentifyWeb.Services
         private void Delete(PhoneNumberSubAttributeDto phoneNumberSubAttributeDto)
         {
 
-            var phoneNumberSubAttributeEntity = _personsAttributeEntity.PhoneNumberSubAttribute.Where(x => x.Id == phoneNumberSubAttributeDto.Id).FirstOrDefault(null);
+            var phoneNumberSubAttributeEntity = _personsAttributeEntity.PhoneNumberSubAttribute.Where(x => x.Id == phoneNumberSubAttributeDto.Id).FirstOrDefault();
 
             if (phoneNumberSubAttributeEntity == null)
             {
@@ -405,6 +439,11 @@ namespace IdentifyWeb.Services
 
         private void TransferInfo(PhoneNumberSubAttributeDto dto, PhoneNumberSubAttribute entity)
         {
+            if (dto.IsNew)
+            {
+                entity.Id = Guid.NewGuid().ToString();
+            }
+
             entity.Ext = dto.Ext;
             entity.Number = dto.Number;
 
@@ -450,7 +489,7 @@ namespace IdentifyWeb.Services
         private void Update(TimeFrameSubAttributeDto timeFrameSubAttributeDto)
         {
 
-            var timeFrameSubAttributeEntity = _personsAttributeEntity.TimeFrameSubAttribute.Where(x => x.Id == timeFrameSubAttributeDto.Id).FirstOrDefault(null);
+            var timeFrameSubAttributeEntity = _personsAttributeEntity.TimeFrameSubAttribute.Where(x => x.Id == timeFrameSubAttributeDto.Id).FirstOrDefault();
 
             if (timeFrameSubAttributeEntity == null)
             {
@@ -466,7 +505,7 @@ namespace IdentifyWeb.Services
         private void Delete(TimeFrameSubAttributeDto timeFrameSubAttributeDto)
         {
 
-            var timeFrameSubAttributeEntity = _personsAttributeEntity.TimeFrameSubAttribute.Where(x => x.Id == timeFrameSubAttributeDto.Id).FirstOrDefault(null);
+            var timeFrameSubAttributeEntity = _personsAttributeEntity.TimeFrameSubAttribute.Where(x => x.Id == timeFrameSubAttributeDto.Id).FirstOrDefault();
 
             if (timeFrameSubAttributeEntity == null)
             {
@@ -479,6 +518,11 @@ namespace IdentifyWeb.Services
 
         private void TransferInfo(TimeFrameSubAttributeDto dto, TimeFrameSubAttribute entity)
         {
+            if(dto.IsNew)
+            {
+                entity.Id = Guid.NewGuid().ToString();
+            }
+
             entity.From = dto.From;
             entity.To = dto.To;
 

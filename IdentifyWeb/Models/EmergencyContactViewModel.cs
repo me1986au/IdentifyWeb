@@ -15,6 +15,11 @@ namespace IdentifyWeb.Models
         {
         }
 
+        public EmergencyContactViewModel(Enumerations.ModifyActionRequired modifyActionRequired)
+        {
+            ModifyActionRequired = modifyActionRequired;
+        }
+
         public EmergencyContactViewModel(string personsAttributeId, string firstName, string lastName, string @alias, string phoneNumber)
         {
             PersonsAttributeId = personsAttributeId;
@@ -31,6 +36,7 @@ namespace IdentifyWeb.Models
 
             if (dto.PersonalSubAttributeDtos != null && dto.PersonalSubAttributeDtos.Any())
             {
+                PersonalSubAttributeId = dto.PersonalSubAttributeDtos.First().Id;
                 FirstName = dto.PersonalSubAttributeDtos.First().FirstName;
                 LastName = dto.PersonalSubAttributeDtos.First().LastName;
                 Alias = dto.PersonalSubAttributeDtos.First().Alias;
@@ -38,10 +44,12 @@ namespace IdentifyWeb.Models
 
             if (dto.PhoneNumberSubAttributeDtos != null && dto.PhoneNumberSubAttributeDtos.Any())
             {
+                PhoneNumberSubAttributeId = dto.PhoneNumberSubAttributeDtos.First().Id;
                 PhoneNumber = dto.PhoneNumberSubAttributeDtos.First().Number;
             }
 
             PersonsAttributeId = dto.Id;
+            ModifyActionRequired = Enumerations.ModifyActionRequired.Update;
         }
 
 
@@ -56,6 +64,12 @@ namespace IdentifyWeb.Models
         public string PhoneNumber { get; set; }
 
         public string PersonsAttributeId { get; set; }
+        public string PhoneNumberSubAttributeId { get; set; }
+        public string PersonalSubAttributeId { get; set; }
+        public Enumerations.ModifyActionRequired ModifyActionRequired { get; set; }
+
+
+
         public int PersonsAttributeCategoryId = (int)Enumerations.PersonsAttributeCategoryEnum.EmergencyContact;
 
 
@@ -66,6 +80,11 @@ namespace IdentifyWeb.Models
 
     public class EmergencyContactViewModels : List<EmergencyContactViewModel>
     {
+        public EmergencyContactViewModels()
+        {
+
+        }
+
         public EmergencyContactViewModels(ICollection<PersonsAttributeDto> dtos)
         {
            if (dtos != null)

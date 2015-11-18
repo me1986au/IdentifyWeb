@@ -13,7 +13,7 @@ namespace IdentifyWeb.Models
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {
-            //System.Data.Entity.Database.SetInitializer(new DropCreateDatabaseAlways<ApplicationDbContext>());
+            System.Data.Entity.Database.SetInitializer(new DropCreateDatabaseAlways<ApplicationDbContext>());
         }
 
         public static ApplicationDbContext Create()
@@ -22,6 +22,44 @@ namespace IdentifyWeb.Models
         }
 
         public DbSet<Person> Persons { get; set; }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+
+            //modelBuilder.Entity<PersonsAttribute>()
+            //  .HasRequired(t => t.Person)
+            //  .WithMany(t => t.PersonsAttribute)
+            //  .HasForeignKey(d => d.PersonId)
+            //  .WillCascadeOnDelete(true);
+
+            //modelBuilder.Entity<PersonalSubAttribute>()
+            //  .HasRequired(t => t.PersonsAttribute)
+            //  .WithMany(t => t.PersonalSubAttribute)
+            //  .HasForeignKey(d => d.PersonsAttributeId)
+            //  .WillCascadeOnDelete(true);
+
+
+            //modelBuilder.Entity<PhoneNumberSubAttribute>()
+            //  .HasRequired(t => t.PersonsAttribute)
+            //  .WithMany(t => t.PhoneNumberSubAttribute)
+            //  .HasForeignKey(d => d.PersonsAttributeId)
+            //  .WillCascadeOnDelete(true);
+
+            //modelBuilder.Entity<AddressSubAttribute>()
+            //    .HasRequired(t => t.PersonsAttribute)
+            //    .WithMany(t => t.AddressSubAttribute)
+            //    .HasForeignKey(d => d.PersonsAttributeId)
+            //    .WillCascadeOnDelete(true);
+
+            //modelBuilder.Entity<TimeFrameSubAttribute>()
+            //  .HasRequired(t => t.PersonsAttribute)
+            //  .WithMany(t => t.TimeFrameSubAttribute)
+            //  .HasForeignKey(d => d.PersonsAttributeId)
+            //  .WillCascadeOnDelete(true);
+
+
+            base.OnModelCreating(modelBuilder);
+        }
 
     }
 
@@ -229,6 +267,8 @@ namespace IdentifyWeb.Models
         }
 
     }
+
+
 
 }
 //s

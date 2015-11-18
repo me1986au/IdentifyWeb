@@ -77,8 +77,10 @@ namespace IdentifyWeb.Services
 
 
                         var updatePersonEntity = new UpdatePersonEntity(dbContext, personDto, person, userId);
-                        var updatePersonAttributes = new UpdatePersonAttributes(dbContext, personDto.PersonsAttribute.ToList(), person,  userId);
 
+                        person = updatePersonEntity.PerformAction();
+                        var updatePersonAttributes = new UpdatePersonAttributes(dbContext, personDto.PersonsAttribute.ToList(), person,  userId);
+                        updatePersonAttributes.PerformAction();
 
 
                         //person.PersonsAttribute.Add(new PersonsAttribute());
