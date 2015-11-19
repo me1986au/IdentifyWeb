@@ -27,6 +27,8 @@ namespace IdentifyWeb.Models
         public DbSet<PersonalSubAttribute> PersonalSubAttributes { get; set; }
         public DbSet<PhoneNumberSubAttribute> PhoneNumberSubAttributes { get; set; }
         public DbSet<TimeFrameSubAttribute> TimeFrameSubAttributes { get; set; }
+        public DbSet<Device> Devices { get; set; }
+
 
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -274,6 +276,23 @@ namespace IdentifyWeb.Models
 
     }
 
+    public class Device
+    {
+        [Key]
+        public string Id { get; set; }
+        public string PasswordHash { get; set; }
+        public string SecurityStamp { get; set; }
+
+        public string PersonId { get; set; }
+        public Person Person { get; set; }
+
+        public string ApplicationUserId { get; set; }
+        public ApplicationUser ApplicationUser { get; set; }
+
+        [NotMapped]
+        public bool IsDeviceRegistered { get { return !string.IsNullOrEmpty(ApplicationUserId); } }
+    }
+
     public class EntitiesContextInitializer : DropCreateDatabaseIfModelChanges<ApplicationDbContext>
     {
         protected override void Seed(ApplicationDbContext context)
@@ -304,6 +323,15 @@ namespace IdentifyWeb.Models
 
 
             context.Users.Add(appUser);
+
+
+            var device = new Device();
+            device.Id = "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa";
+            device.PasswordHash = "ANtUN7jEFNzDNzxDQuYjnH9PO/WWVGEYEzLgQ2+4oN3N9Sbk++dbz6C577t9I3Pduw==";
+            device.SecurityStamp = "e99fd978-c92a-4ea7-a7c7-e2379c3acc6f";
+
+            context.Devices.Add(device);
+
 
             var personAttributeCategory = new PersonsAttributeCategory();
                 personAttributeCategory.Id = 1;

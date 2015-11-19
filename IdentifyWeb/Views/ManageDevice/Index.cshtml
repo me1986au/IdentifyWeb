@@ -1,0 +1,28 @@
+﻿@{
+    ViewBag.Title = "Manage Device";
+
+}
+
+
+<script type="text/javascript">
+
+    $(document).ready(function() {
+        $('#btnRegisterDevice').click(function () {
+            document.location = '@Url.Action("RegisterDevice", "ManageDevice")';
+        });
+    });
+</script>
+
+<h2>@ViewBag.Title.</h2>
+
+<p class="text-success">@ViewBag.StatusMessage</p>
+<div>
+
+    <h4>This page allows you to Add, Modify, Deactivate Devices</h4>
+    <hr />
+
+
+    <input id="btnRegisterDevice" type="button" value="Register Device" />
+
+</div>
+

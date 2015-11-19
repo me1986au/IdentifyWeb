@@ -14,11 +14,23 @@
             $('.date-picker').datepicker();
         });
 
-        $(function() {
-            // This will make every element with the class "date-picker" into a DatePicker element
-            //$('.date-picker').datepicker({ dateFormat: 'dd/mm/yy' });
-            $('.date-picker').datepicker("option", "dateFormat", "dd/mm/yy");
+
+    $(document).ready(function () {
+
+        $(".date-picker").each(function (index) {
+
+            // when changing the date format of the control, the control wipes its date text,
+            // so we need to store the date text in a local variable
+            // and re-apply the text after the change of format happens
+
+            var datepicker_default_val = $(this).val();
+            $(this).datepicker("option", "dateFormat", "dd/mm/yy");
+            $(this).datepicker("setDate", datepicker_default_val);
+
+            $(this).show();
         });
+
+    });
 
     </script>
 

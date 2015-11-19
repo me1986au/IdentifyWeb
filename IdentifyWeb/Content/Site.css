@@ -24,12 +24,15 @@ textarea {
 }
 
 a.deleteRow {
-    
 }
 
 div.partial {
     border: 1px solid black;
-     border-radius: 25px; 
-     padding: 10px;
-     margin-top: 10px;
+    border-radius: 25px;
+    padding: 10px;
+    margin-top: 10px;
+}
+
+.date-picker {
+    display: none;
 }

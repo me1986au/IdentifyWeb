@@ -79,7 +79,7 @@ namespace IdentifyWeb.Services
                         var updatePersonEntity = new UpdatePersonEntity(dbContext, personDto, person, userId);
 
                         person = updatePersonEntity.PerformAction();
-                        var updatePersonAttributes = new UpdatePersonAttributes(dbContext, personDto.PersonsAttribute.ToList(), person,  userId);
+                        var updatePersonAttributes = new UpdatePersonAttributes(dbContext, personDto.PersonsAttribute.ToList(), person, userId);
                         updatePersonAttributes.PerformAction();
 
 
@@ -144,6 +144,33 @@ namespace IdentifyWeb.Services
 
         }
 
+
+    }
+
+    public static class ManageDeviceService
+    {
+        
+        public static bool RegisterDevice(string deviceId, string passwordHash, string applicationUserId, string personId)
+        {
+            using (var dbContext = new ApplicationDbContext())
+            {
+                var device = dbContext.Devices.Where(x => x.Id == deviceId && x.PasswordHash == passwordHash).FirstOrDefault();
+
+                if (device != null && !device.IsDeviceRegistered && device.PasswordHash == passwordHash)
+                {
+                    device.ApplicationUserId = applicationUserId;
+                    device.PersonId = personId;
+
+                    dbContext.Entry(device).State = EntityState.Modified;
+                    dbContext.SaveChanges();
+
+                }
+            }
+
+
+                return false;
+
+        }
 
     }
 }

@@ -78,7 +78,7 @@
     <div class="form-group">
         @Html.LabelFor(m => m.DateOfBirth, new {@class = "col-md-2 control-label"})
         <div class="col-md-10">
-            @Html.TextBoxFor(model => model.DateOfBirth, new { @class = "form-control date-picker", placeholder = "Enter Drop-off date here..." })
+            @Html.TextBoxFor(model => model.DateOfBirth, new { @class = "form-control picker-date", placeholder = "Enter Drop-off date here..." })
             @Html.ValidationMessageFor(model => model.DateOfBirth)
         </div>
     </div>

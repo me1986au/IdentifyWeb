@@ -1,0 +1,54 @@
+﻿
+@model IdentifyWeb.Models.RegisterDeviceViewModel
+@{
+    ViewBag.Title = "Register Device";
+}
+
+
+<script type="text/javascript">
+
+   
+</script>
+
+<h2>@ViewBag.Title.</h2>
+
+<div>
+
+
+    @using (Html.BeginForm("RegisterDevice", "ManageDevice", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+        <h4>Register a new device.</h4>
+        <hr />
+        @Html.ValidationSummary("", new { @class = "text-danger" })
+        <h5>Device Details:</h5>
+
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.DeviceId, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.DeviceId, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.PersonId, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.PersonId, new { @class = "form-control" })
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" class="btn btn-default" value="Register Device" />
+            </div>
+        </div>
+    }
+
+</div>

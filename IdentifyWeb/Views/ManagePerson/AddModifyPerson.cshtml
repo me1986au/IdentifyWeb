@@ -31,85 +31,83 @@
 
 <h2>@ViewBag.Title.</h2>
 
-<p class="text-success">@ViewBag.StatusMessage</p>
 <div>
 
 
-   @using (Html.BeginForm("AddModifyPerson", "ManagePerson", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-   {
-    @Html.AntiForgeryToken()
-    <h4>Create a new account.</h4>
-    <hr />
-    @Html.ValidationSummary("", new { @class = "text-danger" })
-       <h5>Personal Details:</h5>
-       @Html.HiddenFor(model => model.PersonId)
-       @Html.HiddenFor(model => model.ModifyActionRequired)
+    @using (Html.BeginForm("AddModifyPerson", "ManagePerson", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+        <h4>Create a new account.</h4>
+        <hr />
+        @Html.ValidationSummary("", new { @class = "text-danger" })
+        <h5>Personal Details:</h5>
+        @Html.HiddenFor(model => model.PersonId)
+        @Html.HiddenFor(model => model.ModifyActionRequired)
 
-    <div class="form-group">
-        @Html.LabelFor(m => m.FirstName, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
+        <div class="form-group">
+            @Html.LabelFor(m => m.FirstName, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
+            </div>
         </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.LastName, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
+        <div class="form-group">
+            @Html.LabelFor(m => m.LastName, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
+            </div>
         </div>
-    </div>
-    <div class="form-group">
+        <div class="form-group">
             @Html.LabelFor(m => m.Alias, new { @class = "col-md-2 control-label" })
             <div class="col-md-10">
                 @Html.TextBoxFor(m => m.Alias, new { @class = "form-control" })
             </div>
         </div>
-       <div class="form-group">
-           @Html.LabelFor(m => m.Gender, new {@class = "col-md-2 control-label"})
-           <div class="col-md-10">
+        <div class="form-group">
+            @Html.LabelFor(m => m.Gender, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
 
-               @Html.Label("Female")
-               @Html.RadioButtonFor(m => m.Gender, "female", new {@class = "form-control"})
-               @Html.Label("Intersex")
-               @Html.RadioButtonFor(m => m.Gender, "intersex", new {@class = "form-control"})
-               @Html.Label("Male")
-               @Html.RadioButtonFor(m => m.Gender, "male", new {@class = "form-control"})
-           </div>
-       </div>
-       <div class="form-group">
-           @Html.LabelFor(m => m.DateOfBirth, new {@class = "col-md-2 control-label"})
-           <div class="col-md-10">
-           
-                @Html.TextBoxFor(model => model.DateOfBirth, new { @class = "form-control date-picker", placeholder = "Enter Drop-off date here...", Value = string.Format("0:MM/dd/yyyy", Model.DateOfBirth.ToString()) })
-     
-
-               @Html.ValidationMessageFor(model => model.DateOfBirth)
-           </div>
-       </div>
-
-
-       <div id="EmergencyContactViewModels" class="form-group">
-
-           <h4>Emergency Contacts</h4>
-
-
-           @if (Model.EmergencyContactViewModels != null && Model.EmergencyContactViewModels.Any())
-           {
-               foreach (var emergencyModel in Model.EmergencyContactViewModels)
-               {
-                   Html.RenderPartial("EditorTemplates/_EmergencyContact", emergencyModel);
-               }
-           }
-       </div>
-
-       <button id="btnAddContact" onsubmit="return false;">Add Contact</button>
-       // return false on the on submit, prevents the form to do a postback
-
-
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" class="btn btn-default" value="@ViewBag.SaveText" />
+                @Html.Label("Female")
+                @Html.RadioButtonFor(m => m.Gender, "female", new { @class = "form-control" })
+                @Html.Label("Intersex")
+                @Html.RadioButtonFor(m => m.Gender, "intersex", new { @class = "form-control" })
+                @Html.Label("Male")
+                @Html.RadioButtonFor(m => m.Gender, "male", new { @class = "form-control" })
+            </div>
         </div>
-    </div>
-   }
+        <div class="form-group">
+            @Html.LabelFor(m => m.DateOfBirth, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.DateOfBirth, new { @class = "form-control date-picker", placeholder = "Enter Drop-off date here...", style = "display:none;" })
+
+
+                @Html.ValidationMessageFor(model => model.DateOfBirth)
+            </div>
+        </div>
+
+
+        <div id="EmergencyContactViewModels" class="form-group">
+
+            <h4>Emergency Contacts</h4>
+
+
+            @if (Model.EmergencyContactViewModels != null && Model.EmergencyContactViewModels.Any())
+            {
+                foreach (var emergencyModel in Model.EmergencyContactViewModels)
+                {
+                    Html.RenderPartial("EditorTemplates/_EmergencyContact", emergencyModel);
+                }
+            }
+        </div>
+
+        <button id="btnAddContact" onsubmit="return false;">Add Contact</button>
+        // return false on the on submit, prevents the form to do a postback
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" class="btn btn-default" value="@ViewBag.SaveText" />
+            </div>
+        </div>
+    }
 
 </div>
