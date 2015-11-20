@@ -1,0 +1,45 @@
+﻿
+@model IdentifyWeb.Models.UpdateDeviceViewModel
+@{
+    ViewBag.Title = "Update Device";
+}
+
+
+<script type="text/javascript">
+
+   
+</script>
+
+<h2>@ViewBag.Title.</h2>
+
+<div>
+
+
+    @using (Html.BeginForm("UpdateDevice", "ManageDevice", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+        <h4>Register a new device.</h4>
+        <hr />
+        @Html.ValidationSummary("", new { @class = "text-danger" })
+        <h5>Device Details:</h5>
+
+
+        <div class="form-group">
+            @Html.HiddenFor(m => m.DeviceId)
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.SelectedPersonId, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(m => m.SelectedPersonId, @Model.PeopleList, "----No One---",  new { @class = "form-control" })
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" class="btn btn-default" value="Update Device" />
+            </div>
+        </div>
+    }
+
+</div>

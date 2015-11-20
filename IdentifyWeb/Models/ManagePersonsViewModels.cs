@@ -207,15 +207,17 @@ namespace IdentifyWeb.Models
             }
         }
 
-        public abstract class LinkDto
-        {
-            public string Id { get; set; }
-            public abstract string EditUrl { get; }
-            public abstract string DeleteUrl { get; }
-            public bool CanEdit { get; set; }
-            public bool CanDelete { get; set; }
 
-        }
+
+    }
+
+    public abstract class LinkDto
+    {
+        public string Id { get; set; }
+        public abstract string EditUrl { get; }
+        public abstract string DeleteUrl { get; }
+        public bool CanEdit { get; set; }
+        public bool CanDelete { get; set; }
 
     }
 }

@@ -113,8 +113,14 @@ namespace IdentifyWeb.Services
                 this.PersonsAttribute.Add(dto);
 
             }
+
         }
 
+        public string FullName
+        {
+            get { return String.Format("{0} {1} ({2})", FirstName, LastName, Alias); }
+
+        }
 
     }
 

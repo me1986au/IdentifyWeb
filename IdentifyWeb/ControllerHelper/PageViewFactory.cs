@@ -25,5 +25,22 @@ namespace IdentifyWeb.ControllerHelper
             return personGroupSection;
         }
 
+
+        public static List<ItemGroupSection> GetDeviceLinkPartials(string userId)
+        {
+            var retrieveDeviceLinks = new List<ItemGroupSection>();
+
+            retrieveDeviceLinks.Add(CreateDeviceGroupSection(userId));
+
+            return retrieveDeviceLinks;
+        }
+
+        public static ItemGroupSection CreateDeviceGroupSection(string userId)
+        {
+            var personGroupSection = new DeviceGroupSection(userId);
+            return personGroupSection;
+        }
+
+
     }
 }
