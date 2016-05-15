@@ -20,7 +20,7 @@ namespace IdentifyWeb.Controllers
         public async Task<ActionResult> Index()
         {
 
-            string userId = GetUserId();
+            string userId = User.Identity.GetUserId();
 
             var model = new ManagePersonsIndexViewModel();
             model.PageRenderActions = PageViewFactory.GetPersonLinkPartials(userId);

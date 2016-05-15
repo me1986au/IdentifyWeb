@@ -137,21 +137,11 @@ namespace IdentifyWeb.Services
 
             // foreach(var newAttribute)
 
-        }
 
 
-        public static List<PersonDto> GetPersonListByUserId(string userId)
-        {
-
-            using (var dbContext = ApplicationDbContext.Create())
-            {
-                var entityList = dbContext.Persons.ToList();
 
 
-                var personDtoList = entityList.Select(x => new PersonDto(x)).ToList();
 
-                return personDtoList;
-            }
         }
 
 
@@ -160,17 +150,16 @@ namespace IdentifyWeb.Services
     public static class ManageDeviceService
     {
         
-        public static bool RegisterDevice(string deviceId, string passwordHash, string applicationUserId, string selectedPersonId)
+        public static bool RegisterDevice(string deviceId, string passwordHash, string applicationUserId, string personId)
         {
             using (var dbContext = new ApplicationDbContext())
             {
-                var device = dbContext.Devices.Where(x => x.Id == deviceId).FirstOrDefault();
-
+                var device = dbContext.Devices.Where(x => x.Id == deviceId && x.PasswordHash == passwordHash).FirstOrDefault();
 
                 if (device != null && !device.IsDeviceRegistered && device.PasswordHash == passwordHash)
                 {
                     device.ApplicationUserId = applicationUserId;
-                    device.PersonId = selectedPersonId;
+                    device.PersonId = personId;
 
                     dbContext.Entry(device).State = EntityState.Modified;
                     dbContext.SaveChanges();
@@ -182,60 +171,6 @@ namespace IdentifyWeb.Services
                 return false;
 
         }
-
-        public static bool UpdateDevice(string deviceId, string applicationUserId, string selectedPersonId)
-        {
-
-            using (var dbContext = new ApplicationDbContext())
-            {
-                var device = dbContext.Devices.Where(x => x.Id == deviceId).FirstOrDefault();
-
-
-                if (device != null && device.IsDeviceRegistered)
-                {
-
-                    device.PersonId = selectedPersonId;
-                    dbContext.Entry(device).State = EntityState.Modified;
-                    dbContext.SaveChanges();
-
-                    return true;
-
-                }
-            }
-            return false;
-        }
-
-        public static List<DeviceDto> GetRegisteredDevicesForUser(string applicationUserId)
-        {
-
-            using (var dbContext = new ApplicationDbContext())
-            {
-                var devices = dbContext.Devices.Include(x => x.Person)
-                    .Where(x => x.ApplicationUserId == applicationUserId).ToList();
-
-                var dtos = devices.Select(device => new DeviceDto(device)).ToList();
-
-                return dtos;
-            }
-
-        }
-
-
-        public static DeviceDto GetRegisteredDevice(string deviceId)
-        {
-            using (var dbContext = new ApplicationDbContext())
-            {
-                var device = dbContext.Devices.Where(x => x.Id == deviceId).FirstOrDefault();
-
-                if (device != null)
-                {
-                    return new DeviceDto(device);
-                }
-
-                return null;
-            }
-        }
-
 
     }
 }

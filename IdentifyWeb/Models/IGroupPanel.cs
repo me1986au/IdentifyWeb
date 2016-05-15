@@ -72,35 +72,4 @@ namespace IdentifyWeb.Models
 
         public override bool IsVisible { get; set; }
     }
-
-
-    public class DeviceGroupSection : ItemGroupSection
-    {
-
-        public DeviceGroupSection(string userId)
-        {
-            Title = "Devices";
-            Ids = userId;
-        }
-
-        public override string RenderController
-        {
-            get { return "ManageDevice"; }
-        }
-
-        public override string RenderAction
-        {
-            get { return "_ExistingDevice"; }
-        }
-
-        public override string AddItemUrl
-        {
-            get
-            {
-                return "";
-            }
-        }
-
-        public override bool IsVisible { get; set; }
-    }
 }

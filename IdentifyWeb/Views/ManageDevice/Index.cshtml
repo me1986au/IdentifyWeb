@@ -1,7 +1,4 @@
-﻿@model IdentifyWeb.Models.ManageDeviceIndexViewModel
-
-
-@{
+﻿@{
     ViewBag.Title = "Manage Device";
 
 }
@@ -24,12 +21,8 @@
     <h4>This page allows you to Add, Modify, Deactivate Devices</h4>
     <hr />
 
-    @foreach (var renderAction in Model.PageRenderActions)
-    {
-        Html.RenderAction(renderAction.RenderAction, renderAction.RenderController, new { ids = renderAction.Ids });
-    }
 
-    <input id="btnRegisterDevice" type="button" value="Register New Device" />
+    <input id="btnRegisterDevice" type="button" value="Register Device" />
 
 </div>
 

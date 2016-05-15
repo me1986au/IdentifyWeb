@@ -201,7 +201,6 @@
     <Compile Include="Models\IGroupPanel.cs" />
     <Compile Include="Models\ManageDevicesViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\DeviceDto.cs" />
     <Compile Include="Services\EmergencyContactDto.cs" />
     <Compile Include="Services\ManagePersonService.cs" />
     <Compile Include="Services\UpdatePersonAttrbiutesEntityBehavior.cs" />
@@ -307,8 +306,6 @@
     <Content Include="Views\Shared\_PartialLayout.cshtml" />
     <Content Include="Views\ManageDevice\Index.cshtml" />
     <Content Include="Views\ManageDevice\RegisterDevice.cshtml" />
-    <Content Include="Views\ManageDevice\Partial\_DeviceLinkPartial.cshtml" />
-    <Content Include="Views\ManageDevice\UpdateDevice.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

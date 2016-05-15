@@ -37,9 +37,9 @@
             </div>
         </div>
         <div class="form-group">
-            @Html.LabelFor(m => m.SelectedPersonId, new { @class = "col-md-2 control-label" })
+            @Html.LabelFor(m => m.PersonId, new { @class = "col-md-2 control-label" })
             <div class="col-md-10">
-                @Html.DropDownListFor(m => m.SelectedPersonId, @Model.PeopleList, "----No One---",  new { @class = "form-control" })
+                @Html.TextBoxFor(m => m.PersonId, new { @class = "form-control" })
             </div>
         </div>
 
